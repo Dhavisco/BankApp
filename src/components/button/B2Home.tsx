@@ -12,7 +12,7 @@ export const B2Home = () => {
   }
 
   return (
-   <div className='mt-6'>
+   <div className='mt-3'>
         <button onClick={homeNav} className='font-medium text-black hover:text-blue-500 hover:underline'>Back to home {'->'}</button>
         
       </div>

@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import Card from '../UI/Card';
 import { B2Home } from '../button/B2Home';
+import ProgressBar from '../UI/ProgressBar';
 
 // Validation schemas for each step
 const personalInfoSchema = Yup.object({
@@ -28,13 +29,12 @@ const contactInfoSchema = Yup.object({
     .required('Phone number is required'),
 });
 
+
 const SignUp: React.FC = () => {
   const { signup } = useAuth();
   const navigate = useNavigate();
 
-  // Track the current step and form data
-  const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
+  const data = {
     first_name: '',
     last_name: '',
     date_of_birth: '',
@@ -43,7 +43,11 @@ const SignUp: React.FC = () => {
     confirmPassword: '',
     address: '',
     phone_number: '',
-  });
+  }
+
+  // Track the current step and form data
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState(data);
 
   // Function to go to the next step
   const nextStep = () => setStep(step + 1);
@@ -63,13 +67,16 @@ const SignUp: React.FC = () => {
   };
 
   const handleRedirect = () => {
-    navigate('/login')
-  }
+    navigate('/login');
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-gray-100 via-gray-50 to-white px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl w-full">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-green-100 via-green-50 to-white px-4 sm:px-6 lg:px-8">
+      <div className="">
         <Card title="Sign Up">
+          {/* Progress Bar */}
+          <ProgressBar step={step} />
+
           <Formik
             initialValues={formData}
             enableReinitialize
@@ -93,22 +100,22 @@ const SignUp: React.FC = () => {
                 {step === 1 && (
                   <>
                     {/* Step 1: Personal Information */}
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Personal Information</h2>
-                    <div className="mb-4">
+                
+                    <div className="mb-2">
                       <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="first_name">
                         First Name
                       </label>
                       <Field name="first_name" type="text" id="first_name" className="w-full px-4 py-2 border rounded-lg text-sm focus:outline-none" />
                       <ErrorMessage name="first_name" component="div" className="text-red-500 text-sm mt-1" />
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-2">
                       <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="last_name">
                         Last Name
                       </label>
                       <Field name="last_name" type="text" id="last_name" className="w-full px-4 py-2 border rounded-lg text-sm focus:outline-none" />
                       <ErrorMessage name="last_name" component="div" className="text-red-500 text-sm mt-1" />
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-2">
                       <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="date_of_birth">
                         Date of Birth
                       </label>
@@ -121,22 +128,22 @@ const SignUp: React.FC = () => {
                 {step === 2 && (
                   <>
                     {/* Step 2: Account Information */}
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Account Information</h2>
-                    <div className="mb-4">
+                
+                    <div className="mb-2">
                       <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                         Email
                       </label>
                       <Field name="email" type="email" id="email" className="w-full px-4 py-2 border rounded-lg text-sm focus:outline-none" />
                       <ErrorMessage name="email" component="div" className="text-red-500 text-sm mt-1" />
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-2">
                       <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                         Password
                       </label>
                       <Field name="password" type="password" id="password" className="w-full px-4 py-2 border rounded-lg text-sm focus:outline-none" />
                       <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-1" />
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-2">
                       <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="confirmPassword">
                         Confirm Password
                       </label>
@@ -149,15 +156,15 @@ const SignUp: React.FC = () => {
                 {step === 3 && (
                   <>
                     {/* Step 3: Contact Information */}
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Contact Information</h2>
-                    <div className="mb-4">
+                   
+                    <div className="mb-2">
                       <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="address">
                         Address
                       </label>
                       <Field name="address" type="text" id="address" className="w-full px-4 py-2 border rounded-lg text-sm focus:outline-none" />
                       <ErrorMessage name="address" component="div" className="text-red-500 text-sm mt-1" />
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-2">
                       <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone_number">
                         Phone Number
                       </label>
@@ -168,7 +175,7 @@ const SignUp: React.FC = () => {
                 )}
 
                 {/* Navigation Buttons */}
-                <div className="flex justify-between mt-6">
+                <div className="flex justify-between mt-3">
                   {step > 1 && (
                     <button
                       type="button"
@@ -180,7 +187,7 @@ const SignUp: React.FC = () => {
                   )}
                   <button
                     type="submit"
-                    className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg"
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
                     disabled={isSubmitting}
                   >
                     {step < 3 ? 'Next' : 'Submit'}
@@ -191,12 +198,11 @@ const SignUp: React.FC = () => {
           </Formik>
         </Card>
 
-
-         <div className='flex justify-center mt-4'>
-        <span className='font-medium text-gray-400'>Got an account?</span>
-        <button onClick={handleRedirect} className='font-bold text-black underline ml-1 cursor-pointer hover:text-blue-600'>Sign In</button>
-      </div>
-        <div className="mt-6 text-center">
+        <div className='flex justify-center mt-2'>
+          <span className='font-medium text-gray-400'>Got an account?</span>
+          <button onClick={handleRedirect} className='font-bold text-black underline ml-1 cursor-pointer hover:text-blue-600'>Sign In</button>
+        </div>
+        <div className="mt-1 text-center">
           <B2Home />
         </div>
       </div>

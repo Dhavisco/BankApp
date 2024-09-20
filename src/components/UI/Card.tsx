@@ -15,7 +15,7 @@ const Card: React.FC<CardProps> = (props) => {
             <Logo />
           </div>
         </div>
-      <h2 className="text-2xl font-bold mb-6 text-center">{props.title}</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center">{props.title}</h2>
      
       <div>{props.children}</div>
 
