@@ -1,56 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../context/useAuth';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup'
+import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { B2Home } from '../button/B2Home';
 import Card from '../UI/Card';
+import LoginNotification from '../UI/LoginNotification';
 
 const Login: React.FC = () => {
   const { login } = useAuth(); // Auth hook
-  const navigate = useNavigate(); // navigation hook
+  const navigate = useNavigate(); // Navigation hook
+  const [apiError, setApiError] = useState<string | null>(null); // State to track API errors
 
-  // Custom validation function
-  // const validate = (values: { email: string; password: string }) => {
-  //   const errors: { email?: string; password?: string } = {};
+  const handleRedirect = () => {
+    navigate('/register');
+  };
 
-  //   if (!values.email) {
-  //     errors.email = 'Email is required';
-  //   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-  //     errors.email = 'Invalid email address';
-  //   }
+  const notificationClose = () => {
+    setApiError(null); // Close the notification
+  };
 
-  //   if (!values.password) {
-  //     errors.password = 'Password is required';
-  //   }
-
-  //   return errors;
-  // };
-
-
-  const signUpHandler = () => {
-    navigate('/register')
-  }
-
-   const validationSchema = Yup.object({
+  // Validation schema using Yup
+  const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email address').required('Email is required'),
-    password: Yup.string()
-    .required('Password is required')
-    .min(8, 'Password must be at least 8 characters'),
+    password: Yup.string().required('Password is required').min(8, 'Password must be at least 8 characters'),
   });
 
   return (
-
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-green-100 via-green-50 to-white px-4 sm:px-6 lg:px-8">
+      
+      {/* Show notification when an error occurs */}
+      {apiError && (
+          <LoginNotification message={apiError} onClose={notificationClose} />
+        )}
+      
       <Card title="Login to your account">
         <Formik
           initialValues={{ email: '', password: '' }}
           validationSchema={validationSchema}
-          onSubmit={(values) => {
-            login(values.email, values.password);
-            navigate('/home'); // Redirect to Home page after login
-          }}
-        >
+          onSubmit={async (values, { setSubmitting }) => {
+            try {
+              setApiError(null); // Clear previous errors
+              await login(values); // Use login function directly
+              navigate('/welcome'); // Redirect only on successful login
+            } catch (error: unknown) {
+              // Check if error is an instance of Error
+              if (error instanceof Error) {
+                setApiError(error.message || 'Invalid login credentials.');
+              }
+            } finally {
+              setSubmitting(false);
+            }
+          }}      >
           {({ isSubmitting, errors, touched }) => (
             <Form>
               <div className="mb-4">
@@ -61,7 +62,7 @@ const Login: React.FC = () => {
                   name="email"
                   type="email"
                   id="email"
-                  className={`w-full px-3 py-2 border text-sm md:text-base rounded-lg text-gray-700 focus:outline-none  ${
+                  className={`w-full px-3 py-2 border text-sm md:text-base rounded-lg text-gray-700 focus:outline-none ${
                     touched.email && errors.email ? 'ring-1 ring-red-500' : 'focus:ring-1 focus:ring-blue-500'
                   }`}
                   placeholder="Enter your email address"
@@ -69,7 +70,7 @@ const Login: React.FC = () => {
                 <ErrorMessage name="email" component="div" className="text-red-500 text-sm mt-1" />
               </div>
 
-              <div className="mb-3">
+              <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                   Password
                 </label>
@@ -77,18 +78,15 @@ const Login: React.FC = () => {
                   name="password"
                   type="password"
                   id="password"
-                  className={`w-full px-3 py-2 border text-sm md:text-base rounded-lg text-gray-700 focus:outline-none  ${
+                  className={`w-full px-3 py-2 border text-sm md:text-base rounded-lg text-gray-700 focus:outline-none ${
                     touched.password && errors.password ? 'ring-1 ring-red-500' : 'focus:ring-1 focus:ring-blue-500'
                   }`}
-                  placeholder="Enter your password (min. of 8 characters)"
+                  placeholder="Enter your password"
                 />
                 <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-1" />
               </div>
 
-              <div className="mb-6">
-                <span className="text-blue-500 text-sm underline cursor-pointer hover:text-blue-600">Forgot password</span>
-              </div>
-
+             
               <button
                 type="submit"
                 className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none"
@@ -101,16 +99,16 @@ const Login: React.FC = () => {
         </Formik>
       </Card>
 
-      <div className='mt-4'>
-        <span className='font-medium text-gray-400'>Are you a new user?</span>
-        <button onClick={signUpHandler} className='font-bold text-black underline ml-1 cursor-pointer hover:text-blue-600'>Create an account</button>
+      <div className="mt-4">
+        <span className="font-medium text-gray-400">Are you a new user?</span>
+        <button onClick={handleRedirect} className="font-bold text-black underline ml-1 cursor-pointer hover:text-blue-600">
+          Create an account
+        </button>
       </div>
 
-     <B2Home/>
+      <B2Home />
     </div>
   );
 };
 
 export default Login;
-
-

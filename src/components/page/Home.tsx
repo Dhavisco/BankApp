@@ -65,7 +65,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import img from "../../assets/homeimg.avif";
 import Logo from '../icons/Logo';
-import Preloader from '../Preloader';
+import Preloader from '../UI/Preloader';
 import './Home.css'
 
 const Home: React.FC = () => {

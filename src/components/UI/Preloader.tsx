@@ -1,6 +1,6 @@
 // src/components/Preloader.tsx
 import React from 'react';
-import Logo from './icons/Logo';
+import Logo from '../icons/Logo';
 
 const Preloader: React.FC = () => {
   return (
