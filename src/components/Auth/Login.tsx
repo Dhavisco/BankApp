@@ -42,7 +42,7 @@ const Login: React.FC = () => {
             try {
               setApiError(null); // Clear previous errors
               await login(values); // Use login function directly
-              navigate('/welcome'); // Redirect only on successful login
+              navigate('/dashboard'); // Redirect only on successful login
             } catch (error: unknown) {
               // Check if error is an instance of Error
               if (error instanceof Error) {

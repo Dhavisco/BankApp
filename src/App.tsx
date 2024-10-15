@@ -4,7 +4,7 @@ import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
 import { AuthProvider } from './components/context/AuthProvider'
 import Home from './components/page/Home';
 import SignUp from './components/Auth/SignUp';
-import Welcome from './components/page/Welcome';
+import Dashboard from './components/page/Dashboard';
 
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<SignUp />} />
-            <Route path="/welcome" element={<Welcome/>} />
+            <Route path="/dashboard/*" element={<Dashboard/>} />
         </Routes>
        </ErrorBoundary>
         </AuthProvider>
