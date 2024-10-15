@@ -8,9 +8,9 @@ const recentTransactions = [
   { id: 1, date: '2024-01-02', amount: -150.5, description: 'Transfer to ABC' },
   { id: 2, date: '2024-01-03', amount: 200, description: 'Deposit' },
   { id: 3, date: '2024-01-04', amount: -75, description: 'Payment to XYZ' },
-  { id: 3, date: '2024-01-04', amount: -75, description: 'Payment to XYZ' },
-  { id: 3, date: '2024-01-04', amount: -75, description: 'Payment to XYZ' },
-  { id: 3, date: '2024-01-04', amount: -75, description: 'Payment to XYZ' },
+  { id: 4, date: '2024-01-04', amount: -75, description: 'Payment to XYZ' },
+  { id: 5, date: '2024-01-04', amount: -75, description: 'Payment to XYZ' },
+  { id: 6, date: '2024-01-04', amount: -75, description: 'Payment to XYZ' },
   // Add more transaction objects
 ];
 

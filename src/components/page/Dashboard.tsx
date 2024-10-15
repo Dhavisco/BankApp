@@ -117,7 +117,7 @@ const Dashboard: React.FC = () => {
   return (
     <div className="flex min-h-screen bg-gray-100">
 
-     <div className='h-screen'>
+     <div className='h-screen hidden lg:block'>
     <Sidebar />
      </div>
      
