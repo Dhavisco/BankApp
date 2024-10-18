@@ -15,11 +15,11 @@ const MainArea: React.FC = () => {
   const {user} = useAuth();
 
   return (
-    <div className="flex-1 p-4">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-semibold">Welcome, {user?.email}</h1>
-        <div className="flex items-center space-x-4">
-          <img src="/path/to/avatar" alt="User Avatar" className="w-12 h-12 rounded-full"/>
+    <div className="flex-1 p-2">
+      <div className="flex justify-between items-center mb-6 lg:mb-3">
+        <h1 className="md:text-2xl text-xl font-semibold">Welcome, {user?.first_name}</h1>
+        <div className="flex items-center hover:cursor-pointer space-x-4">
+          <img src={user?.avatar} alt="User Avatar" className="w-10 h-10 rounded-full"/>
         </div>
       </div>
       <BalanceCard isHidden ={isHidden} onToggle={handleToggle}/>

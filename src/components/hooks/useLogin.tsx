@@ -8,11 +8,14 @@ const useLogin = () => {
         const response = await axiosInstance.post('/api/v1/auth/login', loginData);
         
         if (response.status === 200) {
-          const { access_token } = response.data;
+          const { access_token, user } = response.data;
 
           if (access_token) {
             localStorage.setItem('access_token', access_token);
-            return response.data;
+            // console.log(response)
+            //  console.log('access_token:', access_token);
+            //  console.log('User data:', user);
+            return user;  // Return response data
           }
         } else {
           throw new Error('Invalid email/password combination');

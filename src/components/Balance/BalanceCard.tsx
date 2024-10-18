@@ -12,10 +12,10 @@ const BalanceCard: React.FC<BalanceCardProps> = ({isHidden, onToggle}) => {
 
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 mb-6">
+    <div className="bg-white shadow-md rounded-2xl p-4 mb-6 lg:mb-3">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold">Available Balance</h2>
-        <button onClick={onToggle} className="text-gray-600 hover:text-black">
+        <h2 className="md:text-xl text-base font-semibold">Available Balance</h2>
+        <button onClick={onToggle} className="text-gray-600 bg-gray-200 rounded-2xl p-1 hover:text-black">
           {isHidden ? <Show/> : <Hide/>}
         </button>
       </div>
