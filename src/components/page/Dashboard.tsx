@@ -5,6 +5,7 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 import MainArea from '../../components/MainArea/MainArea';
 import TransactionsTable from '../../components/Transactions/TransactionsTable';
 import MobileNav from '../Sidebar/MobileNav';
+import Profile from '../Profile/Profile';
 
 const Dashboard: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const Dashboard: React.FC = () => {
 
           {/* Transactions route, showing all transactions */}
           <Route path="transactions" element={<TransactionsTable />} />
+           <Route path="profile" element={<Profile />} />
         </Routes>
       </div>
 

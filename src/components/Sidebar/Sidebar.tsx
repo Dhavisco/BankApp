@@ -19,6 +19,12 @@ const Sidebar: React.FC = () => {
         <li className="mb-4">
           <Link to="/dashboard/transactions" className="hover:text-gray-700 font-semibold">Transactions</Link>
         </li>
+        <li className="mb-4">
+          <Link to="/dashboard/profile" className="hover:text-gray-700 font-semibold">Profile</Link>
+        </li>
+        <li className="mb-4">
+          <Link to="/dashboard/profile" className="hover:text-gray-700 font-semibold">Settings</Link>
+        </li>
       </ul>
       </div>
      

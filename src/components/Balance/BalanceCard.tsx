@@ -1,5 +1,6 @@
 import React from 'react';
 import {Show, Hide} from '../icons/ToggleIcon'
+import useProfile from '../hooks/useProfile';
 
 interface BalanceCardProps {
   isHidden: boolean;
@@ -8,7 +9,12 @@ interface BalanceCardProps {
 
 const BalanceCard: React.FC<BalanceCardProps> = ({isHidden, onToggle}) => {
  
-  const balance = 1250.75; // Example balance
+
+  const {data} = useProfile();
+
+  // const balance = 1250.75; // Example balance
+
+  const balance = data?.account.balance;
 
 
   return (
@@ -20,7 +26,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({isHidden, onToggle}) => {
         </button>
       </div>
       <div className="mt-4 text-3xl font-bold">
-        {isHidden ? '****' : `₦${balance.toFixed(2)}`}
+        {isHidden ? '****' : `₦${balance}`}
       </div>
     </div>
   );

@@ -34,6 +34,10 @@ const TransactionsTable: React.FC = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value)
+  }
+
   return (
     <div className="bg-white shadow-md rounded-lg p-4 lg:p-2 lg:px-4">
       {/* Search Bar */}
@@ -43,7 +47,7 @@ const TransactionsTable: React.FC = () => {
           placeholder="Search by Reference"
           className="border border-gray-300 rounded-lg p-2 w-full"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={changeHandler}
         />
       </div>
 
@@ -81,7 +85,7 @@ const TransactionsTable: React.FC = () => {
                   </span>
                 </td>
                 <td className="py-4">
-                  <span className='text-xs rounded-full bg-green-100 text-green-500 font-medium px-2'>
+                  <span className='md:text-xs rounded-full bg-green-100 text-green-500 font-medium px-2'>
                     {transaction.status}
                   </span>
                 </td>
@@ -100,13 +104,13 @@ const TransactionsTable: React.FC = () => {
                 <div className='flex flex-col'>
                   <span className="text-sm font-medium">{transaction.description}</span>
                   <span className="text-xs text-gray-500">{transaction.date}</span>
-                  <span className="text-xs text-gray-500">Reference: {transaction.reference}</span>
+                  <span className="text-xs text-gray-600">Reference: {transaction.reference}</span>
                 </div>
                 <div className="flex flex-col items-end">
                   <span className={`text-sm font-medium ${transaction.amount > 0 ? 'text-green-500' : 'text-black'}`}>
                     {transaction.amount > 0 ? '+' : '-'}₦{Math.abs(transaction.amount).toFixed(2)}
                   </span>
-                  <span className='text-xs rounded-full bg-green-100 text-green-500 font-medium px-2'>
+                  <span className='text-[0.7rem] rounded-full bg-green-100 text-green-500 font-medium px-2'>
                     {transaction.status}
                   </span>
                 </div>

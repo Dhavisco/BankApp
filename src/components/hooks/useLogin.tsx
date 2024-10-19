@@ -7,6 +7,7 @@ const useLogin = () => {
       
         const response = await axiosInstance.post('/api/v1/auth/login', loginData);
         
+        
         if (response.status === 200) {
           const { access_token, user } = response.data;
 
@@ -14,7 +15,8 @@ const useLogin = () => {
             localStorage.setItem('access_token', access_token);
             // console.log(response)
             //  console.log('access_token:', access_token);
-            //  console.log('User data:', user);
+             console.log('User data:', user);
+             console.log(response)
             return user;  // Return response data
           }
         } else {
