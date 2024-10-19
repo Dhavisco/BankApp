@@ -45,10 +45,10 @@ const Profile: React.FC = () => {
                 </div>
                 <div><IoSettingsOutline className='hover:cursor-pointer text-black'/></div>
             </div>
-            <div className='balance mt-2'>
+            <div className='balance mt-1 lg:mt-2'>
                 <div className="flex gap-1 items-center">
                     <h2 className="md:text-base text-sm text-gray-50">Total Balance</h2>
-                    <button onClick={handleToggle} className="text-gray-600 bg-gray-100 rounded-2xl p-1 text-sm hover:text-black">
+                    <button onClick={handleToggle} className="text-gray-600 bg-gray-100 rounded-2xl p-[0.15rem] text-xs lg:text-sm lg:p-1 hover:text-black">
                         {isHidden ? <Show/> : <Hide/>}
                     </button>
                 </div>
@@ -60,7 +60,7 @@ const Profile: React.FC = () => {
 
     </div>
 
-    <div className=" bg-white shadow-md rounded-lg p-4 lg:w-full flex flex-col gap-2 mt-3 lg:mt-0">
+    <div className=" bg-white shadow-md rounded-lg p-4 lg:w-full flex flex-col gap-1 lg:gap-2 mt-3 lg:mt-0">
           <h2 className="text-xl font-semibold mb-1">Account Details</h2>
          <div>
           <strong>Account No:</strong> {data.account.account_number}

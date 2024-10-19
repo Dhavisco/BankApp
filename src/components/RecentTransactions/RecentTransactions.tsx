@@ -22,7 +22,7 @@ const RecentTransactions: React.FC<TransactionProp> = ({showTransactions}) => {
   return (
 
     <div className="bg-white shadow-md ${} rounded-lg p-4 lg:p-2 lg:px-4">
-      <h2 className="md:text-lg font-semibold mb-2">Recent Transactions</h2>
+      <h2 className="md:text-lg font-semibold mb-2">Transactions</h2>
       {showTransactions && (<ul>
         {recentTransactions.slice(0, 5).map((transaction) => (
           <li key={transaction.id} className="mb-4 lg:mb-1 flex justify-between">

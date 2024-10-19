@@ -6,6 +6,10 @@ const transactions = [
   { id: 2, reference: 'DEF456', date: '2024-01-03', amount: 200, description: 'Deposit', status: 'Successful' },
   { id: 3, reference: 'GHI789', date: '2024-01-04', amount: -75, description: 'Payment to XYZ', status: 'Successful' },
   { id: 4, reference: 'JKL101', date: '2024-01-05', amount: -45, description: 'Transfer to LMN', status: 'Successful' },
+  { id: 5, reference: 'ABC123', date: '2024-01-02', amount: -150.5, description: 'Transfer to ABC', status: 'Successful' },
+  { id: 6, reference: 'DEF456', date: '2024-01-03', amount: 200, description: 'Deposit', status: 'Successful' },
+  { id: 7, reference: 'GHI789', date: '2024-01-04', amount: -75, description: 'Payment to XYZ', status: 'Successful' },
+  { id: 8, reference: 'JKL101', date: '2024-01-05', amount: -45, description: 'Transfer to LMN', status: 'Successful' },
   // More transactions for pagination example
 ];
 
@@ -40,6 +44,9 @@ const TransactionsTable: React.FC = () => {
 
   return (
     <div className="bg-white shadow-md rounded-lg p-4 lg:p-2 lg:px-4">
+
+       <h2 className="md:text-lg font-semibold mb-4">All Transactions</h2>
+
       {/* Search Bar */}
       <div className="mb-4">
         <input
@@ -52,7 +59,7 @@ const TransactionsTable: React.FC = () => {
       </div>
 
       {/* Transactions Table */}
-      <h2 className="md:text-lg font-semibold mb-2">All Transactions</h2>
+  
 
       {/* Table for larger screens */}
       <div className="hidden md:block">
@@ -123,7 +130,7 @@ const TransactionsTable: React.FC = () => {
       {/* Pagination Controls */}
       <div className="flex justify-between mt-4">
         <button
-          className={`px-4 py-2 rounded-lg ${currentPage === 1 ? 'bg-gray-300' : 'bg-blue-500 text-white'}`}
+          className={`px-4 py-2 rounded-lg ${currentPage === 1 ? 'bg-gray-300' : 'bg-green-500 text-white'}`}
           onClick={handlePrevPage}
           disabled={currentPage === 1}
         >
@@ -131,7 +138,7 @@ const TransactionsTable: React.FC = () => {
         </button>
         <span className="text-sm">Page {currentPage} of {totalPages}</span>
         <button
-          className={`px-4 py-2 rounded-lg ${currentPage === totalPages ? 'bg-gray-300' : 'bg-blue-500 text-white'}`}
+          className={`px-4 py-2 rounded-lg ${currentPage === totalPages ? 'bg-gray-300' : 'bg-green-500 text-white'}`}
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
         >
