@@ -10,15 +10,6 @@ const API_URL = import.meta.env.VITE_BASE_URL; // Assumes you're using Vite for 
   },
 });
 
- // Function to set Authorization header
-// export const setAuthToken = (token: string | null) => {
-//   if (token) {
-//     axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-//   } else {
-//     delete axiosInstance.defaults.headers.common['Authorization'];
-//   }
-// };
-
 axiosInstance.interceptors.request.use(
   config => {
     config.headers['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
