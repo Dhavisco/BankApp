@@ -15,6 +15,7 @@ const RecentTransactions: React.FC<TransactionProp> = ({ showTransactions }) => 
         amount: number;
         narration: string;
         created_at: string;
+        transaction_type: string;
     }
 
     return (
@@ -26,7 +27,7 @@ const RecentTransactions: React.FC<TransactionProp> = ({ showTransactions }) => 
                         <li key={transaction.id} className="mb-4 lg:mb-1 flex justify-between">
                             <div className='flex gap-2 items-center'>
                                 <span className='rounded-full p-2 bg-gray-200'>
-                                    {transaction.amount > 0 ? (
+                                    {transaction.transaction_type === 'deposit' ? (
                                         <MdOutlineArrowDownward className='text-green-700' />
                                     ) : (
                                         <MdOutlineArrowUpward className='text-red-700' />
@@ -38,8 +39,8 @@ const RecentTransactions: React.FC<TransactionProp> = ({ showTransactions }) => 
                                 </div>
                             </div>
                             <div className='flex flex-col items-end'>
-                                <span className={`font-medium ${transaction.amount > 0 ? 'text-green-500' : 'text-black'}`}>
-                                    {transaction.amount > 0 ? '+' : '-'}₦{Math.abs(transaction.amount).toFixed(2)}
+                                <span className={`font-medium ${transaction.transaction_type === 'deposit' ? 'text-green-500' : 'text-black'}`}>
+                                    {transaction.transaction_type === 'deposit' ? '+' : '-'}₦{Math.abs(transaction.amount).toFixed(2)}
                                 </span>
                                 <span className='text-[0.6rem] rounded-3xl bg-green-100 text-green-500 font-medium px-1 w-fit'>Successful</span>
                             </div>
