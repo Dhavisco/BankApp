@@ -2,7 +2,7 @@ import React from 'react';
 import { Bs123 } from 'react-icons/bs';
 import { MdOutlinePerson } from 'react-icons/md';
 import Logo from '../icons/Logo';
-import useProfile from '../hooks/useProfile';
+import {useProfile} from '../hooks/useProfile';
 
 const BankTransfer: React.FC = () => {
   const { data } = useProfile();
@@ -15,9 +15,9 @@ const BankTransfer: React.FC = () => {
   };
 
   return (
-    <div className='BankTransfer bg-white p-4 rounded-lg shadow-sm'>
+    <div className='Transfer bg-white p-4 rounded-lg shadow-sm'>
       <div className='description mb-4'>
-        <div className='font-medium text-sm'>Bank Transfer</div>
+        <div className='font-medium text-sm'>Recipient Account</div>
         <p className='text-xs text-gray-500'>Add money via mobile or internet banking</p>
       </div>
       <div className='flex flex-col lg:flex-row gap-8 lg:gap-0 lg:justify-between'>

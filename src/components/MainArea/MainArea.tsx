@@ -3,7 +3,7 @@ import BalanceCard from '../Balance/BalanceCard';
 import QuickActions from '../QuickActions/QuickActions';
 import RecentTransactions from '../RecentTransactions/RecentTransactions';
 // import { useAuth } from '../context/useAuth';
-import useProfile from '../hooks/useProfile';
+import {useProfile} from '../hooks/useProfile';
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { RiCustomerService2Line } from "react-icons/ri";
 

@@ -7,6 +7,7 @@ import TransactionsTable from '../../components/Transactions/TransactionsTable';
 import MobileNav from '../Sidebar/MobileNav';
 import Profile from '../Profile/Profile';
 import Deposit from '../QuickActions/Deposit';
+import Transfer from '../QuickActions/Transfer';
 
 const Dashboard: React.FC = () => {
   return (
@@ -29,8 +30,8 @@ const Dashboard: React.FC = () => {
 
           {/* Quick Actions route - deposit and transfer */}
           <Route path="deposit" element={<Deposit />} />
-          {/* <Route path="/dashboard/transfer" element={<Transfer />} />
-          <Route path="/dashboard/pay-bills" element={<PayBills />} /> */}
+          <Route path="transfer" element={<Transfer />} />
+          {/* <Route path="/dashboard/pay-bills" element={<PayBills />} /> */}
         </Routes>
       </div>
 

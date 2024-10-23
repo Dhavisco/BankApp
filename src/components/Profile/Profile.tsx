@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useProfile from '../hooks/useProfile'; // Import the hook
+import {useProfile} from '../hooks/useProfile'; // Import the hook
 import { FaClipboardList } from "react-icons/fa";
 import { IoSpeedometer } from "react-icons/io5";
 import { FaCreditCard } from "react-icons/fa6";
@@ -15,6 +15,11 @@ const Profile: React.FC = () => {
   const { data, isLoading, error } = useProfile();
    const [isHidden, setIsHidden] = useState(true);
 
+  const balance = data.account.balance;
+
+  const formatBalance = (balance: number) => {
+  return balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
 
 
   const handleToggle = () => {
@@ -53,7 +58,7 @@ const Profile: React.FC = () => {
                     </button>
                 </div>
                 <div className="mt-0 md:text-xl text-base font-bold text-white">
-                    {isHidden ? '****' : `₦${data.account.balance}`}
+                    {isHidden ? '****' : `₦${formatBalance(balance)}`}
                 </div>
             </div>
         </div>
@@ -123,10 +128,11 @@ const Profile: React.FC = () => {
                     <div className='flex justify-between items-center'>
                     <div className='flex gap-4 items-center'>
                         <span><SlEnergy className='text-green-500 h-5 w-5'/></span> 
+                        <Link to="/dashboard/deposit">
                         <div className='flex flex-col'>
                         <span className='text-sm md:text-base'>Transfer to Me</span>
                         <span className='text-xs md:text-sm text-gray-600'>Receive funds or payment</span>
-                        </div>                
+                        </div></Link>                
                         </div> 
                         <span className='text-lg text-gray-700'>{">"}</span>
                     </div>

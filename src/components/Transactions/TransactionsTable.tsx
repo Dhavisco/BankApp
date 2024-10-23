@@ -1,26 +1,19 @@
 import React, { useState } from 'react';
+import { useTransactions } from '../hooks/useProfile'; // Adjust this path accordingly
 import { MdOutlineArrowDownward, MdOutlineArrowUpward } from 'react-icons/md';
 
-const transactions = [
-  { id: 1, reference: 'ABC123', date: '2024-01-02', amount: -150.5, description: 'Transfer to ABC', status: 'Successful' },
-  { id: 2, reference: 'DEF456', date: '2024-01-03', amount: 200, description: 'Deposit', status: 'Successful' },
-  { id: 3, reference: 'GHI789', date: '2024-01-04', amount: -75, description: 'Payment to XYZ', status: 'Successful' },
-  { id: 4, reference: 'JKL101', date: '2024-01-05', amount: -45, description: 'Transfer to LMN', status: 'Successful' },
-  { id: 5, reference: 'ABC123', date: '2024-01-02', amount: -150.5, description: 'Transfer to ABC', status: 'Successful' },
-  { id: 6, reference: 'DEF456', date: '2024-01-03', amount: 200, description: 'Deposit', status: 'Successful' },
-  { id: 7, reference: 'GHI789', date: '2024-01-04', amount: -75, description: 'Payment to XYZ', status: 'Successful' },
-  { id: 8, reference: 'JKL101', date: '2024-01-05', amount: -45, description: 'Transfer to LMN', status: 'Successful' },
-  // More transactions for pagination example
-];
-
 const TransactionsTable: React.FC = () => {
+  const { data } = useTransactions();
   const [currentPage, setCurrentPage] = useState(1);
   const [transactionsPerPage] = useState(5); // Show 5 transactions per page
   const [searchQuery, setSearchQuery] = useState(''); // For search bar
 
+  // Check if data is available and extract transactions
+  const transactions = data?.transactions || [];
+
   // Handle search filtering
-  const filteredTransactions = transactions.filter((transaction) =>
-    transaction.reference.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredTransactions = transactions.filter((transaction: { reference: string }) =>
+    transaction.reference.toLowerCase().trim().includes(searchQuery.toLowerCase().trim())
   );
 
   // Pagination logic
@@ -39,13 +32,13 @@ const TransactionsTable: React.FC = () => {
   };
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value)
-  }
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset to page 1 on search
+  };
 
   return (
     <div className="bg-white shadow-md rounded-lg p-4 lg:p-2 lg:px-4">
-
-       <h2 className="md:text-lg font-semibold mb-4">All Transactions</h2>
+      <h2 className="md:text-lg font-semibold mb-4">All Transactions</h2>
 
       {/* Search Bar */}
       <div className="mb-4">
@@ -59,8 +52,6 @@ const TransactionsTable: React.FC = () => {
       </div>
 
       {/* Transactions Table */}
-  
-
       {/* Table for larger screens */}
       <div className="hidden md:block">
         <table className="w-full text-left">
@@ -74,30 +65,48 @@ const TransactionsTable: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {currentTransactions.map((transaction) => (
-              <tr key={transaction.id} className="border-b hover:bg-gray-50">
-                <td className="py-4">{transaction.date}</td>
-                <td className="py-4">{transaction.reference}</td>
-                <td className="py-4">
-                  <div className='flex items-center gap-2'>
-                    <span className='rounded-full p-2 bg-gray-200'>
-                      {transaction.amount > 0 ? <MdOutlineArrowDownward className='text-green-700' /> : <MdOutlineArrowUpward className='text-red-700' />}
+            {currentTransactions.length > 0 ? (
+              currentTransactions.map((transaction: {
+                id: string | number;
+                created_at: string | number | Date;
+                reference: string;
+                transaction_type: string;
+                narration: string;
+                amount: number;
+                status: string;
+              }) => (
+                <tr key={transaction.id} className="border-b hover:bg-gray-50">
+                  <td className="py-4">{new Date(transaction.created_at).toLocaleDateString()}</td>
+                  <td className="py-4">{transaction.reference}</td>
+                  <td className="py-4">
+                    <div className='flex items-center gap-2'>
+                      <span className='rounded-full p-2 bg-gray-200'>
+                        {transaction.transaction_type === 'deposit' ? (
+                          <MdOutlineArrowDownward className='text-green-700' />
+                        ) : (
+                          <MdOutlineArrowUpward className='text-red-700' />
+                        )}
+                      </span>
+                      <span>{transaction.narration}</span>
+                    </div>
+                  </td>
+                  <td className="py-4 font-medium">
+                    <span className={`${transaction.transaction_type === 'deposit' ? 'text-green-500' : 'text-black'}`}>
+                      {transaction.transaction_type === 'deposit' ? '+' : '-'}₦{Math.abs(parseFloat(transaction.amount.toString())).toFixed(2)}
                     </span>
-                    <span>{transaction.description}</span>
-                  </div>
-                </td>
-                <td className="py-4 font-medium">
-                  <span className={`${transaction.amount > 0 ? 'text-green-500' : 'text-black'}`}>
-                    {transaction.amount > 0 ? '+' : '-'}₦{Math.abs(transaction.amount).toFixed(2)}
-                  </span>
-                </td>
-                <td className="py-4">
-                  <span className='md:text-xs rounded-full bg-green-100 text-green-500 font-medium px-2'>
-                    {transaction.status}
-                  </span>
-                </td>
+                  </td>
+                  <td className="py-4">
+                    <span className='md:text-xs rounded-full bg-green-100 text-green-500 font-medium px-2'>
+                      {transaction.status}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={5} className="py-4 text-center">No transactions found with reference {searchQuery}</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
@@ -105,25 +114,37 @@ const TransactionsTable: React.FC = () => {
       {/* List view for small screens */}
       <div className="block md:hidden">
         <ul>
-          {currentTransactions.map((transaction) => (
-            <li key={transaction.id} className="border-b hover:bg-gray-50 py-4">
-              <div className="flex justify-between items-start">
-                <div className='flex flex-col'>
-                  <span className="text-sm font-medium">{transaction.description}</span>
-                  <span className="text-xs text-gray-500">{transaction.date}</span>
-                  <span className="text-xs text-gray-600">Reference: {transaction.reference}</span>
+          {currentTransactions.length > 0 ? (
+            currentTransactions.map((transaction: {
+              id: string | number;
+              created_at: string | number | Date;
+              transaction_type: string;
+              reference: string;
+              narration: string;
+              amount: number;
+              status: string;
+            }) => (
+              <li key={transaction.id} className="border-b hover:bg-gray-50 py-4">
+                <div className="flex justify-between items-start">
+                  <div className='flex flex-col'>
+                    <span className="text-sm font-medium">{transaction.narration}</span>
+                    <span className="text-xs text-gray-500">{new Date(transaction.created_at).toLocaleDateString()}</span>
+                    <span className="text-xs text-gray-600">Reference: {transaction.reference}</span>
+                  </div>
+                  <div className="flex flex-col items-end">
+                    <span className={`text-sm font-medium ${transaction.transaction_type === 'deposit' ? 'text-green-500' : 'text-black'}`}>
+                      {transaction.transaction_type === 'deposit' ? '+' : '-'}₦{Math.abs(parseFloat(transaction.amount.toString())).toFixed(2)}
+                    </span>
+                    <span className='text-[0.7rem] rounded-full bg-green-100 text-green-500 font-medium px-2'>
+                      {transaction.status}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex flex-col items-end">
-                  <span className={`text-sm font-medium ${transaction.amount > 0 ? 'text-green-500' : 'text-black'}`}>
-                    {transaction.amount > 0 ? '+' : '-'}₦{Math.abs(transaction.amount).toFixed(2)}
-                  </span>
-                  <span className='text-[0.7rem] rounded-full bg-green-100 text-green-500 font-medium px-2'>
-                    {transaction.status}
-                  </span>
-                </div>
-              </div>
-            </li>
-          ))}
+              </li>
+            ))
+          ) : (
+            <li className="border-b py-4 text-center">No transactions found with reference {searchQuery}</li>
+          )}
         </ul>
       </div>
 
@@ -136,7 +157,7 @@ const TransactionsTable: React.FC = () => {
         >
           Previous
         </button>
-        <span className="text-sm">Page {currentPage} of {totalPages}</span>
+        <span className="text-sm">Page {currentPage} of {totalPages > 0 ? totalPages : 1}</span>
         <button
           className={`px-4 py-2 rounded-lg ${currentPage === totalPages ? 'bg-gray-300' : 'bg-green-500 text-white'}`}
           onClick={handleNextPage}
@@ -150,3 +171,4 @@ const TransactionsTable: React.FC = () => {
 };
 
 export default TransactionsTable;
+

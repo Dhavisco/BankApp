@@ -1,6 +1,6 @@
 import React from 'react';
 import {Show, Hide} from '../icons/ToggleIcon'
-import useProfile from '../hooks/useProfile';
+import {useProfile} from '../hooks/useProfile';
 import { AiFillSafetyCertificate } from "react-icons/ai";
 
 interface BalanceCardProps {
@@ -17,6 +17,10 @@ const BalanceCard: React.FC<BalanceCardProps> = ({isHidden, onToggle}) => {
 
   const balance = data?.account.balance;
 
+  const formatBalance = (balance: number) => {
+  return balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
 
   return (
     <div className="bg-gradient-to-tr from-green-600 text-white to-green-300 shadow-md rounded-2xl p-4 mb-6 lg:mb-3">
@@ -31,7 +35,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({isHidden, onToggle}) => {
         </button>
       </div>
       <div className="mt-3 ml-4 md:text-3xl text-2xl font-bold">
-        {isHidden ? '****' : `₦${balance}`}
+        {isHidden ? '****' : `₦${formatBalance(balance)}`}
       </div>
     </div>
   );
