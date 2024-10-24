@@ -25,14 +25,14 @@ const Sidebar: React.FC = () => {
             <Link to="/dashboard/profile" className={`p-2 block rounded hover:bg-green-300`}>Profile</Link>
           </li>
           <li className={`mb-4 ${isActive('/dashboard/settings') ? 'bg-green-200 text-green-700' : 'font-semibold'}`}>
-            <Link to="/dashboard/settings" className={`p-2 block rounded hover:bg-green-300`}>Settings</Link>
+            <Link to="/dashboard/profile" className={`p-2 block rounded hover:bg-green-300`}>Settings</Link>
           </li>
         </ul>
       </div>
 
       <div className='flex items-center hover:text-gray-700 gap-2'>
         <Link to="/" className="font-semibold">Logout</Link>
-        <IoLogOut className='h-6 w-6'/>``
+        <IoLogOut className='h-6 w-6'/>
       </div>
     </div>
   );
