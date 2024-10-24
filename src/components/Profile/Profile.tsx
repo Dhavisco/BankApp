@@ -9,13 +9,14 @@ import { MdAddIcCall } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import { Hide, Show } from '../icons/ToggleIcon';
 import { SiSpringsecurity } from 'react-icons/si';
+import { IoIosLogOut } from "react-icons/io";
 import { Link } from 'react-router-dom';
 
 const Profile: React.FC = () => {
-  const { data, isLoading, error } = useProfile();
+  const { data, isLoading} = useProfile();
    const [isHidden, setIsHidden] = useState(true);
 
-  const balance = data.account.balance;
+  const balance = data?.account.balance;
 
   const formatBalance = (balance: number) => {
   return balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -27,14 +28,19 @@ const Profile: React.FC = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div>Loading your Account Info...</div>;
   }
 
-  if (error) {
-    return <div>Error loading profile data</div>;
-  }
-
-  
+//   if (error) {
+//     return <div> <div className="error-container bg-red-100 p-6 rounded-lg shadow-lg text-center">
+//   <img src="/error-icon.png" alt="Error Icon" className="error-icon w-16 h-16 mx-auto mb-4" />
+//   <h1 className="text-2xl font-bold mb-2">Oops! Something went wrong.</h1>
+//   <p className="text-gray-700 mb-4">We’re sorry, but there was an issue with this part of the application.</p>
+//   <button className="error-button bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition-all duration-300">
+//     Try Again
+//   </button>
+// </div></div>;
+//   }
 
 
   return (
@@ -45,8 +51,8 @@ const Profile: React.FC = () => {
         <div className='profile-header'>
             <div className='flex justify-between'>
                 <div className='flex gap-1 items-center'>
-                    <img src={data.avatar} alt="" className='w-5 h-5 rounded-full shadow-lg' />
-                    <div className='text-lg font-semibold text-white'>Hi, {data.first_name}</div>
+                    <img src={data?.avatar} alt="" className='w-5 h-5 rounded-full shadow-lg' />
+                    <div className='text-lg font-semibold text-white'>Hi, {data?.first_name}</div>
                 </div>
                 <div><IoSettingsOutline className='hover:cursor-pointer text-black'/></div>
             </div>
@@ -187,7 +193,24 @@ const Profile: React.FC = () => {
             </div>
         
         </div>
+
+         <div className=" bg-white shadow-md rounded-lg p-4 pt-6 lg:w-full flex flex-col gap-3 mt-3">
+            {/* Logout */}
+            <div className='flex justify-between items-center'>
+            <Link to ="/" className='flex gap-4 items-center'>
+                <span><IoIosLogOut className='text-green-500 h-5 w-5'/></span> 
+                <div className='flex flex-col'>
+                <span className='text-sm md:text-base'>Logout</span>
+                </div>
+                
+                </Link> 
+                <span className='text-lg text-gray-700'>{">"}</span>
+            </div>
+        
+        </div>
     </div>
+
+    
        
 
 </div>

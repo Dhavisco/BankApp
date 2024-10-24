@@ -7,7 +7,7 @@ interface ProgressBarProps {
 const ProgressBar: React.FC<ProgressBarProps> = ({ step }) => {
   const getStepClass = (currentStep: number) => {
     if (currentStep <= step) {
-      return 'bg-blue-500 text-white';
+      return 'bg-green-400 text-white';
     }
     return 'bg-gray-300 text-gray-500';
   };
@@ -23,7 +23,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ step }) => {
       </div>
 
       {/* Progress Line 1 */}
-      <div className={`flex-1 h-1 mx-4 ${step >= 2 ? 'bg-blue-500' : 'bg-gray-300'}`} />
+      <div className={`flex-1 h-1 mx-4 ${step >= 2 ? 'bg-green-400' : 'bg-gray-300'}`} />
 
       {/* Step 2 */}
       <div className="flex items-center">
@@ -34,7 +34,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ step }) => {
       </div>
 
       {/* Progress Line 2 */}
-      <div className={`flex-1 h-1 mx-4 ${step >= 3 ? 'bg-blue-500' : 'bg-gray-300'}`} />
+      <div className={`flex-1 h-1 mx-4 ${step >= 3 ? 'bg-green-400' : 'bg-gray-300'}`} />
 
       {/* Step 3 */}
       <div className="flex items-center">

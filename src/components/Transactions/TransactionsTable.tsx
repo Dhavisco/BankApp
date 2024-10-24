@@ -36,6 +36,16 @@ const TransactionsTable: React.FC = () => {
     setCurrentPage(1); // Reset to page 1 on search
   };
 
+  interface Transactions {
+        id: string | number;
+        created_at: string | number | Date;
+        reference: string;
+        transaction_type: string;
+        narration: string;
+        amount: number;
+        status: string;
+  }
+
   return (
     <div className="bg-white shadow-md rounded-lg p-4 lg:p-2 lg:px-4">
       <h2 className="md:text-lg font-semibold mb-4">All Transactions</h2>
@@ -66,15 +76,7 @@ const TransactionsTable: React.FC = () => {
           </thead>
           <tbody>
             {currentTransactions.length > 0 ? (
-              currentTransactions.map((transaction: {
-                id: string | number;
-                created_at: string | number | Date;
-                reference: string;
-                transaction_type: string;
-                narration: string;
-                amount: number;
-                status: string;
-              }) => (
+              currentTransactions.map((transaction: Transactions) => (
                 <tr key={transaction.id} className="border-b hover:bg-gray-50">
                   <td className="py-4">{new Date(transaction.created_at).toLocaleDateString()}</td>
                   <td className="py-4">{transaction.reference}</td>
@@ -104,7 +106,7 @@ const TransactionsTable: React.FC = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={5} className="py-4 text-center">No transactions found with reference {searchQuery}</td>
+                <td colSpan={5} className="py-4 text-center">No transactions found</td>
               </tr>
             )}
           </tbody>
@@ -115,15 +117,7 @@ const TransactionsTable: React.FC = () => {
       <div className="block md:hidden">
         <ul>
           {currentTransactions.length > 0 ? (
-            currentTransactions.map((transaction: {
-              id: string | number;
-              created_at: string | number | Date;
-              transaction_type: string;
-              reference: string;
-              narration: string;
-              amount: number;
-              status: string;
-            }) => (
+            currentTransactions.map((transaction: Transactions) => (
               <li key={transaction.id} className="border-b hover:bg-gray-50 py-4">
                 <div className="flex justify-between items-start">
                   <div className='flex flex-col'>
@@ -143,7 +137,7 @@ const TransactionsTable: React.FC = () => {
               </li>
             ))
           ) : (
-            <li className="border-b py-4 text-center">No transactions found with reference {searchQuery}</li>
+            <li className="border-b py-4 text-center">No transactions found</li>
           )}
         </ul>
       </div>

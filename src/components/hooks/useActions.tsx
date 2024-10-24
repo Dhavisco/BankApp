@@ -14,7 +14,6 @@ export const useDeposit = () => {
       console.log('Deposit successful:', data);
     },
    onError: (error) => {
-  console.error('Error:', error);
 
   if (axios.isAxiosError(error)) {
     const axiosError = error as { response?: { data?: { message?: string }, status?: number } };
@@ -51,10 +50,9 @@ export const useValidate = () => {
   return useMutation({
     mutationFn: validateAccount,
     onSuccess: (data) => {
-      console.log('Validation successful:', data);
+      return data;
     },
    onError: (error) => {
-  console.error('Error:', error);
 
   if (axios.isAxiosError(error)) {
     const axiosError = error as { response?: { data?: { message?: string }, status?: number } };
@@ -90,10 +88,9 @@ export const useTransfer = () => {
   return useMutation({
     mutationFn: transferMoney,
     onSuccess: (data) => {
-      console.log('Transfer successful:', data);
+      return data;
     },
    onError: (error) => {
-  console.error('Error:', error);
 
   if (axios.isAxiosError(error)) {
     const axiosError = error as { response?: { data?: { message?: string }, status?: number } };

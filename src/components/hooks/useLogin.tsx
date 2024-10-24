@@ -15,8 +15,8 @@ const useLogin = () => {
             localStorage.setItem('access_token', access_token);
             // console.log(response)
             //  console.log('access_token:', access_token);
-             console.log('User data:', user);
-             console.log(response)
+            //  console.log('User data:', user);
+            //  console.log(response)
             return user;  // Return response data
           }
         } else {

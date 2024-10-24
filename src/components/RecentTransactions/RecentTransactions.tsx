@@ -23,7 +23,8 @@ const RecentTransactions: React.FC<TransactionProp> = ({ showTransactions }) => 
             <h2 className="md:text-lg font-semibold mb-2">Recent Transactions</h2>
             {showTransactions && (
                 <ul>
-                    {transactions.slice(0, 5).map((transaction: Transaction) => (
+                    {transactions.length > 0 ?
+                    (transactions.slice(0, 5).map((transaction: Transaction) => (
                         <li key={transaction.id} className="mb-4 lg:mb-1 flex justify-between">
                             <div className='flex gap-2 items-center'>
                                 <span className='rounded-full p-2 bg-gray-200'>
@@ -45,7 +46,9 @@ const RecentTransactions: React.FC<TransactionProp> = ({ showTransactions }) => 
                                 <span className='text-[0.6rem] rounded-3xl bg-green-100 text-green-500 font-medium px-1 w-fit'>Successful</span>
                             </div>
                         </li>
-                    ))}
+                    ))) : 
+                    <li className="py-4 text-center">No transactions found</li>
+                    }
                 </ul>
             )}
         </div>

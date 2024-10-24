@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar/Sidebar';
@@ -6,7 +5,7 @@ import MainArea from '../../components/MainArea/MainArea';
 import TransactionsTable from '../../components/Transactions/TransactionsTable';
 import MobileNav from '../Sidebar/MobileNav';
 import Profile from '../Profile/Profile';
-import Deposit from '../QuickActions/Deposit';
+import Deposit from '../QuickActions/Deposit/Deposit';
 import Transfer from '../QuickActions/Transfer';
 
 const Dashboard: React.FC = () => {

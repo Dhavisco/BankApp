@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { IoIosCloseCircle } from 'react-icons/io';
-import {useDeposit} from '../hooks/useActions';
+import {useDeposit} from '../../hooks/useActions';
 
 const TopUp = ({ setShowBankTransfer }: { setShowBankTransfer: React.Dispatch<React.SetStateAction<boolean>> }) => {
   const [amount, setAmount] = useState('');

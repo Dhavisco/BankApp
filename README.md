@@ -6,6 +6,9 @@ This is a financial services web application where users can securely log in, si
 
 - **Login and Signup Pages**: Users can log in or register for a new account.
 - **Form Validation**: Real-time validation using `Formik` and `Yup`.
+- **Financial Management**: Manage account balance, view transactions, and perform actions such as deposit, transfer, and bill payments.
+**Dynamic UI/UX**: Features like a toggling balance card and smooth transitions in forms.
+**Data Fetching**: Powered by React Query for efficient server state management and API data fetching.
 
 ## Technologies Used
 

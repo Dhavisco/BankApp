@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import { useTransfer, useValidate } from '../hooks/useActions';
 import { ImCancelCircle } from "react-icons/im";
 import { SiTicktick } from "react-icons/si";
+import { useProfile } from '../hooks/useProfile';
 
 const Transfer = () => {
   const navigate = useNavigate();
@@ -21,6 +22,10 @@ const Transfer = () => {
 
   const { mutate: validate, data, isPending, isError, error } = useValidate();
   const { mutate: transfer, isPending: transferPending } = useTransfer();
+  const { data: profile } = useProfile();
+
+
+  const curBalance = profile?.account?.balance;
 
   const handleAccountNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -36,6 +41,10 @@ const Transfer = () => {
   const formatAmount = (value: string): string => {
     return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
+
+  const fBalance = formatAmount(curBalance);
+  const transactionFee = 0.01;
+  const transferAmount = curBalance - transactionFee;
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/,/g, '');
@@ -66,7 +75,8 @@ const Transfer = () => {
       ...(showSuccess && {
         amount: Yup.number()
           .required('Amount is required')
-          .min(100, 'Minimum transfer amount is 100'),
+          .min(100, 'Minimum transfer amount is 100')
+          .max(transferAmount, `Insufficent funds. Your current balance is ${fBalance}`),
         narration: Yup.string()
           .required('Please provide a description')
           .max(100, 'Description too long'),
@@ -114,11 +124,11 @@ const getErrorMessage = (error: unknown): string | null => {
   if (typeof error === 'object' && error !== null && 'message' in error) {
       const errorMessage = (error as { message: string }).message;
       if (errorMessage.includes('422') || errorMessage.includes('not found')) {
-          return 'We are having trouble validating the account, Contact Support';
+          return 'Account not found. Please check the account number and try again.';
       }
   }
 
-  return 'An unexpected error occurred. Please try again.';
+  return 'We are having trouble validating the account, Contact Support';
 };
 
   const getTransferErrorMessage = (error: unknown): string => {
@@ -173,7 +183,7 @@ const getErrorMessage = (error: unknown): string | null => {
                 value={account_number}
                 onChange={handleAccountNumberChange}
                 onBlur={formik.handleBlur}
-                className="w-2/3 border-0 border-b border-gray-300 focus:border-green-500 outline-none"
+                className="w-3/4 border-0 border-b border-gray-300 focus:border-green-500 outline-none"
                 inputMode="numeric"
                 maxLength={10}
               />
@@ -192,6 +202,8 @@ const getErrorMessage = (error: unknown): string | null => {
                 <div className="bg-green-100 text-green-600 text-sm p-2 rounded mb-4">
                   {data.account_name}
                 </div>
+                <div className="text-xs text-gray-600 font-normal">Current balance: ₦ {formatAmount(curBalance)} </div>
+                <div className="text-xs text-gray-600 font-normal">Transaction Fee: ₦ {transactionFee} </div>
               </div>
 
               <div className="relative">
@@ -201,7 +213,7 @@ const getErrorMessage = (error: unknown): string | null => {
                 <input
                   type="text"
                   name="amount"
-                  placeholder="100.00 or more"
+                  placeholder="Enter Amount"
                   value={amount}
                   onChange={handleAmountChange}
                   onBlur={formik.handleBlur}
@@ -291,7 +303,7 @@ const getErrorMessage = (error: unknown): string | null => {
         {showErrorModal && (
           <div className="modal fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-900 bg-opacity-50">
             <div className="modal-content bg-white p-6 rounded-lg shadow-lg text-center">
-              <p className="lg:text-lg font-medium text-red-400">{modalMessage}</p>
+              <p className="lg:text-sm text-red-600">{modalMessage}</p>
               <div className='flex justify-center mt-3'><ImCancelCircle className='w-10 h-10 text-red-400 text-center'/></div>
               
               <button
@@ -306,4 +318,6 @@ const getErrorMessage = (error: unknown): string | null => {
       </div>
     </div>
   );
-};export default Transfer;
+};
+
+export default Transfer;

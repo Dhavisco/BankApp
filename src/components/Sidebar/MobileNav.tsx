@@ -9,7 +9,7 @@ const MobileNav: React.FC = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 bg-white border-t border-gray-200 shadow-lg md:hidden">
+    <nav className="fixed inset-x-0 bottom-0 bg-white border-t border-gray-200 shadow-lg lg:hidden">
       <ul className="flex justify-between items-center p-4 text-gray-600">
         
         <li className="flex-1 text-center">

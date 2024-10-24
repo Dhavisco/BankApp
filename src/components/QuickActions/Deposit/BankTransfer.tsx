@@ -1,8 +1,8 @@
 import React from 'react';
 import { Bs123 } from 'react-icons/bs';
 import { MdOutlinePerson } from 'react-icons/md';
-import Logo from '../icons/Logo';
-import {useProfile} from '../hooks/useProfile';
+import Logo from '../../icons/Logo';
+import {useProfile} from '../../hooks/useProfile';
 
 const BankTransfer: React.FC = () => {
   const { data } = useProfile();

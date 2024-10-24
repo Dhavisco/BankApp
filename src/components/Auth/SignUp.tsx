@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Card from '../UI/Card';
 import { B2Home } from '../button/B2Home';
 import ProgressBar from '../UI/ProgressBar';
+import { LuLoader2 } from 'react-icons/lu';
 
 // Validation schemas for each step
 const personalInfoSchema = Yup.object({
@@ -48,23 +49,59 @@ const SignUp: React.FC = () => {
   // Track the current step and form data
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState(data);
+   const [apiError, setApiError] = useState<string | null>(null);
 
   // Function to go to the next step
-  const nextStep = () => setStep(step + 1);
+  const nextStep = () => {
+    setStep(step + 1);
+     setApiError(null); // Clear any API errors when moving to next step
+
+  }
 
   // Function to go to the previous step
-  const prevStep = () => setStep(step - 1);
+  const prevStep = () => {
+    setStep(step - 1)
+     setApiError(null); // Clear any API errors when moving to prev step
+  };
 
   // Submit handler for the final form submission
-  const signupHandler = async (values: typeof formData) => {
+  // const signupHandler = async (values: typeof formData) => {
+  //   try {
+  //     await signup(values);
+  //     console.log('User Successfully signed up', values.email);
+  //     navigate('/home');
+  //   } catch (error: unknown) {
+  //     if(error instanceof Error){
+  //       // Extract error message from the API response
+  //     const errorMessage = error.message || 
+  //                         'An unexpected error occurred. Please try again.';
+  //     setApiError(errorMessage);
+  //     console.error('Signup error', error.message);
+  //     console.error('Signup error', error.name);
+  //     }
+      
+  //   }
+  // };
+
+  const signupHandler = async (values: typeof formData, setSubmitting: (isSubmitting: boolean) => void) => {
     try {
       await signup(values);
       console.log('User Successfully signed up', values.email);
-      navigate('/home');
-    } catch (error) {
-      console.error('Signup error', error);
+      alert('Signup successful! You can now proceed to log in.');
+      
+      navigate('/login');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        // Extract error message from the API response
+        const errorMessage = error.message || 'An unexpected error occurred. Please try again.';
+        setApiError(errorMessage);
+        console.error('Signup error', error.message);
+      }
+    } finally {
+      setSubmitting(false); // Ensure that the form is unlocked after submission
     }
   };
+
 
   const handleRedirect = () => {
     navigate('/login');
@@ -76,6 +113,13 @@ const SignUp: React.FC = () => {
         <Card title="Sign Up">
           {/* Progress Bar */}
           <ProgressBar step={step} />
+
+
+{apiError && (
+            <div className='error text-red-500 my-2'>
+                {apiError}
+            </div>
+          )}
 
           <Formik
             initialValues={formData}
@@ -91,7 +135,7 @@ const SignUp: React.FC = () => {
                 nextStep(); // Move to the next step
                 actions.setSubmitting(false);
               } else {
-                signupHandler(values); // Submit final data
+                signupHandler(values, actions.setSubmitting); // Submit final data
               }
             }}
           >
@@ -175,23 +219,32 @@ const SignUp: React.FC = () => {
                 )}
 
                 {/* Navigation Buttons */}
-                <div className="flex justify-between mt-3">
+                <div className="flex justify-between mt-4">
                   {step > 1 && (
                     <button
                       type="button"
+                      className="text-gray-700 bg-gray-200 px-4 py-2 rounded-md"
                       onClick={prevStep}
-                      className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded-lg"
                     >
-                      Back
+                      Previous
                     </button>
                   )}
-                  <button
-                    type="submit"
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
-                    disabled={isSubmitting}
-                  >
-                    {step < 3 ? 'Next' : 'Submit'}
-                  </button>
+                  {step < 3 && (
+                    <button
+                      type="submit"
+                      className={`px-4 py-2 text-white bg-green-500 rounded-md ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    >
+                      {isSubmitting ? <LuLoader2 className="animate-spin" /> : 'Next'}
+                    </button>
+                  )}
+                  {step === 3 && (
+                    <button
+                      type="submit"
+                      className={`px-4 py-2 text-white bg-green-500 rounded-md ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    >
+                      {isSubmitting ? <LuLoader2 className="animate-spin" /> : 'Sign Up'}
+                    </button>
+                  )}
                 </div>
               </Form>
             )}
@@ -202,6 +255,9 @@ const SignUp: React.FC = () => {
           <span className='font-medium text-gray-400'>Got an account?</span>
           <button onClick={handleRedirect} className='font-bold text-black underline ml-1 cursor-pointer hover:text-blue-600'>Sign In</button>
         </div>
+
+
+        
         <div className="mt-1 text-center">
           <B2Home />
         </div>
