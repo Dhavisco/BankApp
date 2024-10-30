@@ -63,7 +63,7 @@ const Login: React.FC = () => {
                   type="email"
                   id="email"
                   className={`w-full px-3 py-2 border text-sm md:text-base rounded-lg text-gray-700 focus:outline-none ${
-                    touched.email && errors.email ? 'ring-1 ring-red-500' : 'focus:ring-1 focus:ring-blue-500'
+                    touched.email && errors.email ? 'ring-1 ring-red-500' : 'focus:ring-1 focus:ring-green-500'
                   }`}
                   placeholder="Enter your email address"
                 />
@@ -79,7 +79,7 @@ const Login: React.FC = () => {
                   type="password"
                   id="password"
                   className={`w-full px-3 py-2 border text-sm md:text-base rounded-lg text-gray-700 focus:outline-none ${
-                    touched.password && errors.password ? 'ring-1 ring-red-500' : 'focus:ring-1 focus:ring-blue-500'
+                    touched.password && errors.password ? 'ring-1 ring-red-500' : 'focus:ring-1 focus:ring-green-500'
                   }`}
                   placeholder="Enter your password"
                 />
@@ -89,7 +89,7 @@ const Login: React.FC = () => {
              
               <button
                 type="submit"
-                className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none"
+                className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? 'Logging in...' : 'Login'}
@@ -101,7 +101,7 @@ const Login: React.FC = () => {
 
       <div className="mt-4">
         <span className="font-medium text-gray-400">Are you a new user?</span>
-        <button onClick={handleRedirect} className="font-bold text-black underline ml-1 cursor-pointer hover:text-blue-600">
+        <button onClick={handleRedirect} className="font-bold text-black underline ml-1 cursor-pointer hover:text-green-600">
           Create an account
         </button>
       </div>

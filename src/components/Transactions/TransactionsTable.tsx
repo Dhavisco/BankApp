@@ -23,6 +23,20 @@ const TransactionsTable: React.FC = () => {
 
   const totalPages = Math.ceil(filteredTransactions.length / transactionsPerPage);
 
+  // formated transaction amount
+   const formatAmount = (value: string) => {
+    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+
+  //format Date
+  // const formatDate = (dateString) => { 
+  //   const date = new Date(dateString); 
+  //   const options = { day: 'numeric', month: 'short', year: 'numeric' }; 
+  //   const formattedDate = date.toLocaleDateString('en-GB', options).replace(',', ''); 
+  //   const day = date.getDate(); 
+  //   const suffix = day % 10 === 1 && day !== 11 ? 'st' : day % 10 === 2 && day !== 12 ? 'nd' : day % 10 === 3 && day !== 13 ? 'rd' : 'th'; return formattedDate.replace(date.getDate(), `${day}${suffix}`); };
+
+
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
@@ -55,7 +69,7 @@ const TransactionsTable: React.FC = () => {
         <input
           type="text"
           placeholder="Search by Reference"
-          className="border border-gray-300 rounded-lg p-2 w-full"
+          className="border border-gray-300 rounded-lg p-1 w-full"
           value={searchQuery}
           onChange={changeHandler}
         />
@@ -94,7 +108,7 @@ const TransactionsTable: React.FC = () => {
                   </td>
                   <td className="py-4 font-medium">
                     <span className={`${transaction.transaction_type === 'deposit' ? 'text-green-500' : 'text-black'}`}>
-                      {transaction.transaction_type === 'deposit' ? '+' : '-'}₦{Math.abs(parseFloat(transaction.amount.toString())).toFixed(2)}
+                      {transaction.transaction_type === 'deposit' ? '+' : '-'}₦{formatAmount(Math.abs(parseFloat(transaction.amount.toString())).toFixed(2))}
                     </span>
                   </td>
                   <td className="py-4">
@@ -127,7 +141,7 @@ const TransactionsTable: React.FC = () => {
                   </div>
                   <div className="flex flex-col items-end">
                     <span className={`text-sm font-medium ${transaction.transaction_type === 'deposit' ? 'text-green-500' : 'text-black'}`}>
-                      {transaction.transaction_type === 'deposit' ? '+' : '-'}₦{Math.abs(parseFloat(transaction.amount.toString())).toFixed(2)}
+                      {transaction.transaction_type === 'deposit' ? '+' : '-'}₦{formatAmount(Math.abs(parseFloat(transaction.amount.toString())).toFixed(2))}
                     </span>
                     <span className='text-[0.7rem] rounded-full bg-green-100 text-green-500 font-medium px-2'>
                       {transaction.status}
@@ -145,7 +159,7 @@ const TransactionsTable: React.FC = () => {
       {/* Pagination Controls */}
       <div className="flex justify-between mt-4">
         <button
-          className={`px-4 py-2 rounded-lg ${currentPage === 1 ? 'bg-gray-300' : 'bg-green-500 text-white'}`}
+          className={`px-4 py-2 rounded-lg ${currentPage === 1 ? 'bg-gray-300' : 'bg-green-500 hover:bg-green-600 text-white'}`}
           onClick={handlePrevPage}
           disabled={currentPage === 1}
         >
@@ -153,7 +167,7 @@ const TransactionsTable: React.FC = () => {
         </button>
         <span className="text-sm">Page {currentPage} of {totalPages > 0 ? totalPages : 1}</span>
         <button
-          className={`px-4 py-2 rounded-lg ${currentPage === totalPages ? 'bg-gray-300' : 'bg-green-500 text-white'}`}
+          className={`px-4 py-2 rounded-lg ${currentPage === totalPages ? 'bg-gray-300' : 'bg-green-500 hover:bg-green-600 text-white'}`}
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
         >

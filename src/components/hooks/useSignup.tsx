@@ -24,7 +24,7 @@ export const useSignup = () => {
          const errorMessage = error.response?.data?.error || "An unknown error occurred"; // Extract the error message
         if (error.response) {
         //   const errorMessage = error.response.data?.error || "An unknown error occurred"; // Extract the error message
-          alert(errorMessage); // Show the error to the user
+          // alert(errorMessage); // Show the error to the user
            throw new Error(errorMessage);
         
         } else {

@@ -86,7 +86,7 @@ const SignUp: React.FC = () => {
   const signupHandler = async (values: typeof formData, setSubmitting: (isSubmitting: boolean) => void) => {
     try {
       await signup(values);
-      console.log('User Successfully signed up', values.email);
+      // console.log('User Successfully signed up', values.email);
       alert('Signup successful! You can now proceed to log in.');
       
       navigate('/login');
@@ -253,7 +253,7 @@ const SignUp: React.FC = () => {
 
         <div className='flex justify-center mt-2'>
           <span className='font-medium text-gray-400'>Got an account?</span>
-          <button onClick={handleRedirect} className='font-bold text-black underline ml-1 cursor-pointer hover:text-blue-600'>Sign In</button>
+          <button onClick={handleRedirect} className='font-bold text-black underline ml-1 cursor-pointer hover:text-green-600'>Sign In</button>
         </div>
 
 

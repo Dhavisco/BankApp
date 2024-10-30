@@ -105,7 +105,7 @@ const Transfer = () => {
           },
           {
             onSuccess: () => {
-              setModalMessage(`Successfully transferred ₦${values.amount} to ${data.account_name}`);
+              setModalMessage(`Successfully transferred ₦${formatAmount(values.amount)} to ${data.account_name}`);
               setShowSuccessModal(true);
             },
             onError: (error) => {
