@@ -8,10 +8,10 @@ const Deposit: React.FC = () => {
 
   return (
     <div className='Deposit'>
-      <div className='mb-8 bg-white p-5 m-[-1.5rem]'>
-        <Link to='/dashboard' className='font-medium text-gray-700 text-sm'>
-          <span className='mr-2'>{'<'}</span> Add Money
-        </Link>
+      <div className='mb-8 bg-white p-5 m-[-1.5rem] font-medium text-gray-700 text-sm'>
+        <Link to='/dashboard' className=''>
+          <span className='mr-2'>{'<'}</span> </Link>
+          Add Money
       </div>
 
       <div className='flex justify-center gap-3 mb-6'>

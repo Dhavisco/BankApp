@@ -96,7 +96,7 @@ const TransactionsTable: React.FC = () => {
                   <td className="py-4">{transaction.reference}</td>
                   <td className="py-4">
                     <div className='flex items-center gap-2'>
-                      <span className='rounded-full p-2 bg-gray-200'>
+                      <span className='rounded-full p-1.5 bg-gray-100'>
                         {transaction.transaction_type === 'deposit' ? (
                           <MdOutlineArrowDownward className='text-green-700' />
                         ) : (
@@ -134,11 +134,20 @@ const TransactionsTable: React.FC = () => {
             currentTransactions.map((transaction: Transactions) => (
               <li key={transaction.id} className="border-b hover:bg-gray-50 py-4">
                 <div className="flex justify-between items-start">
-                  <div className='flex flex-col'>
-                    <span className="text-sm font-medium">{transaction.narration}</span>
-                    <span className="text-xs text-gray-500">{new Date(transaction.created_at).toLocaleDateString()}</span>
-                    <span className="text-xs text-gray-600">Reference: {transaction.reference}</span>
-                  </div>
+                   <div className='flex items-center gap-2'>
+                            <span className='rounded-full p-1.5 bg-gray-100'>
+                                    {transaction.transaction_type === 'deposit' ? (
+                                    <MdOutlineArrowDownward className='text-green-700 text-sm' />
+                                    ) : (
+                                    <MdOutlineArrowUpward className='text-red-700 text-sm' />
+                                    )}
+                                </span>
+                            <div className='flex flex-col'>
+                                <span className="text-sm font-medium">{transaction.narration}</span>
+                                <span className="text-xs text-gray-500">{new Date(transaction.created_at).toLocaleDateString()}</span>
+                                <span className="text-xs text-gray-600">Reference: {transaction.reference}</span>
+                            </div>
+                            </div>
                   <div className="flex flex-col items-end">
                     <span className={`text-sm font-medium ${transaction.transaction_type === 'deposit' ? 'text-green-500' : 'text-black'}`}>
                       {transaction.transaction_type === 'deposit' ? '+' : '-'}₦{formatAmount(Math.abs(parseFloat(transaction.amount.toString())).toFixed(2))}

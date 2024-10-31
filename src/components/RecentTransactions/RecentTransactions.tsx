@@ -77,11 +77,11 @@ const RecentTransactions: React.FC<TransactionProp> = ({ showTransactions }) => 
                         {transactions.length > 0 ? (
                         transactions.slice(0, 5).map((transaction: Transaction) => (
                             <tr key={transaction.id} className="border-b hover:bg-gray-50">
-                            <td className="py-1 text-sm">{new Date(transaction.created_at).toLocaleDateString()}</td>
-                            <td className="py-1 text-sm">{transaction.reference}</td>
-                            <td className="py-1">
+                            <td className="py-1.5 text-sm">{new Date(transaction.created_at).toLocaleDateString()}</td>
+                            <td className="py-1.5 text-sm">{transaction.reference}</td>
+                            <td className="py-1.5">
                                 <div className='flex items-center gap-2'>
-                                <span className='rounded-full p-2 bg-gray-200'>
+                                <span className='rounded-full p-1.5 bg-gray-100'>
                                     {transaction.transaction_type === 'deposit' ? (
                                     <MdOutlineArrowDownward className='text-green-700' />
                                     ) : (
@@ -91,12 +91,12 @@ const RecentTransactions: React.FC<TransactionProp> = ({ showTransactions }) => 
                                 <span className='text-sm'>{transaction.narration}</span>
                                 </div>
                             </td>
-                            <td className="py-1 font-medium text-sm">
+                            <td className="py-1.5 font-medium text-sm">
                                 <span className={`${transaction.transaction_type === 'deposit' ? 'text-green-500' : 'text-black'} text-sm`}>
                                 {transaction.transaction_type === 'deposit' ? '+' : '-'}₦{formatAmount(Math.abs(parseFloat(transaction.amount.toString())).toFixed(2))}
                                 </span>
                             </td>
-                            <td className="py-1 text-sm">
+                            <td className="py-1.5 text-sm">
                                 <span className='md:text-xs rounded-full bg-green-100 text-green-500 font-medium px-2'>
                                 {transaction.status}
                                 </span>
@@ -119,11 +119,21 @@ const RecentTransactions: React.FC<TransactionProp> = ({ showTransactions }) => 
                         transactions.slice(0, 5).map((transaction: Transaction) => (
                         <li key={transaction.id} className="border-b hover:bg-gray-50 py-2">
                             <div className="flex justify-between items-start">
+                            <div className='flex items-center gap-2'>
+                            <span className='rounded-full p-1 bg-gray-100'>
+                                    {transaction.transaction_type === 'deposit' ? (
+                                    <MdOutlineArrowDownward className='text-green-700 text-sm' />
+                                    ) : (
+                                    <MdOutlineArrowUpward className='text-red-700 text-sm' />
+                                    )}
+                                </span>
                             <div className='flex flex-col'>
                                 <span className="text-sm font-medium">{transaction.narration}</span>
                                 <span className="text-xs text-gray-500">{new Date(transaction.created_at).toLocaleDateString()}</span>
                                 <span className="text-xs text-gray-600">Reference: {transaction.reference}</span>
                             </div>
+                            </div>
+                            
                             <div className="flex flex-col items-end">
                                 <span className={`text-sm font-medium ${transaction.transaction_type === 'deposit' ? 'text-green-500' : 'text-black'}`}>
                                 {transaction.transaction_type === 'deposit' ? '+' : '-'}₦{formatAmount(Math.abs(parseFloat(transaction.amount.toString())).toFixed(2))}
