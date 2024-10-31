@@ -251,7 +251,7 @@ const SignUp: React.FC = () => {
           </Formik>
         </Card>
 
-        <div className='flex justify-center mt-2'>
+        <div className='flex justify-center mt-4'>
           <span className='font-medium text-gray-400'>Got an account?</span>
           <button onClick={handleRedirect} className='font-bold text-black underline ml-1 cursor-pointer hover:text-green-600'>Sign In</button>
         </div>
