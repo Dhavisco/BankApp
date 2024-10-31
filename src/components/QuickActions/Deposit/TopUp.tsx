@@ -11,9 +11,13 @@ const TopUp = ({ setShowBankTransfer }: { setShowBankTransfer: React.Dispatch<Re
 
   const { mutate: deposit, isPending, isError, error } = useDeposit();
 
+  const depositLimit = 200000;
+
   const formatAmount = (value: string) => {
     return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
+
+  const formattedDepositLimit = formatAmount(depositLimit.toString());
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/,/g, '');
@@ -46,8 +50,8 @@ const TopUp = ({ setShowBankTransfer }: { setShowBankTransfer: React.Dispatch<Re
     validationSchema: Yup.object({
       amount: Yup.number()
         .required('Amount is required')
-        .min(100, 'Amount must be between ₦100.00 and ₦9,999.00')
-        .max(9999, 'Amount must be between ₦100.00 and ₦9,999.00'),
+        .min(100, `Amount must be between ₦100.00 and ₦${formattedDepositLimit}`)
+        .max(depositLimit, `Amount must be between ₦100.00 and ₦${formattedDepositLimit}`),
       narration: Yup.string()
         .required('Narration is required')
         .max(50, 'Narration must be 50 characters or less'),
@@ -86,7 +90,7 @@ const TopUp = ({ setShowBankTransfer }: { setShowBankTransfer: React.Dispatch<Re
   };
 
   return (
-    <div className="TopUp bg-white p-4 rounded-lg shadow-sm">
+    <div className="TopUp bg-white p-4 lg:p-6 rounded-lg shadow-sm">
       <div className="description mb-6">
         <div className="font-medium text-sm">Top-up with Card/Account</div>
         <p className="text-xs text-gray-500">Add money directly from your bank card or Account</p>
@@ -114,7 +118,7 @@ const TopUp = ({ setShowBankTransfer }: { setShowBankTransfer: React.Dispatch<Re
           <input
             type="text"
             name="amount"
-            placeholder="100.00-9,999.00"
+            placeholder={`100.00 - ${formattedDepositLimit}`}
             value={amount}
             onChange={handleAmountChange}
             onBlur={formik.handleBlur}
@@ -157,7 +161,7 @@ const TopUp = ({ setShowBankTransfer }: { setShowBankTransfer: React.Dispatch<Re
 
         {/* Bank Transfer Option */}
         <span className="text-xs text-gray-600 font-medium">
-          For amounts above ₦9,999.00{' '}
+          For amounts above ₦{formattedDepositLimit}{' '}
           <button
             type="button"
             onClick={() => setShowBankTransfer(true)}
@@ -170,9 +174,9 @@ const TopUp = ({ setShowBankTransfer }: { setShowBankTransfer: React.Dispatch<Re
         {/* Submit Button */}
         <button
           type="submit"
-          disabled={!formik.values.amount || !formik.values.narration || parseFloat(formik.values.amount) < 100 || parseFloat(formik.values.amount) > 9999}
+          disabled={!formik.values.amount || !formik.values.narration || parseFloat(formik.values.amount) < 100 || parseFloat(formik.values.amount) > depositLimit}
           className={`font-medium mt-6 p-2 w-4/5 ${
-            parseFloat(formik.values.amount) >= 100 && parseFloat(formik.values.amount) <= 9999
+            parseFloat(formik.values.amount) >= 100 && parseFloat(formik.values.amount) <= depositLimit
               ? 'bg-green-600 hover:bg-green-500'
               : 'bg-green-200 cursor-not-allowed'
           } text-white rounded-3xl`}

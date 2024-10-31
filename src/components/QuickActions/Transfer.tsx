@@ -162,7 +162,7 @@ const getErrorMessage = (error: unknown): string | null => {
         Transfer to Bank Account
       </div>
 
-      <div className="Transfer bg-white p-4 rounded-lg shadow-sm">
+      <div className="Transfer bg-white p-4 lg:p-6 rounded-lg shadow-sm">
         {isError && (
           <div className="bg-red-100 text-red-600 text-sm p-2 rounded mb-4">
             {getErrorMessage(error)}

@@ -15,7 +15,7 @@ const BankTransfer: React.FC = () => {
   };
 
   return (
-    <div className='Transfer bg-white p-4 rounded-lg shadow-sm'>
+    <div className='Transfer bg-white p-4 lg:p-6 rounded-lg shadow-sm'>
       <div className='description mb-4'>
         <div className='font-medium text-sm'>Recipient Account</div>
         <p className='text-xs text-gray-500'>Add money via mobile or internet banking</p>
