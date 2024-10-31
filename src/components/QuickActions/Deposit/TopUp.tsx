@@ -180,7 +180,7 @@ const TopUp = ({ setShowBankTransfer }: { setShowBankTransfer: React.Dispatch<Re
             parseFloat(formik.values.amount) >= 100 && parseFloat(formik.values.amount) <= depositLimit
               ? 'bg-green-600 hover:bg-green-500'
               : 'bg-green-200 cursor-not-allowed'
-          } text-white rounded-3xl`}
+          } text-white rounded`}
         >
           {isPending ? 'Processing...' : 'Deposit'}
         </button>

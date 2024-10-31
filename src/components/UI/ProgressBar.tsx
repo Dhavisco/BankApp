@@ -16,10 +16,10 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ step }) => {
     <div className="flex items-center justify-between mb-4">
       {/* Step 1 */}
       <div className="flex items-center">
-        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${getStepClass(1)}`}>
+        <div className={`w-7 h-7 rounded-full flex items-center justify-center ${getStepClass(1)}`}>
           1
         </div>
-        <span className="ml-2 text-xs font-medium">Personal Info</span>
+        <span className="ml-1 text-xs font-medium">Personal Info</span>
       </div>
 
       {/* Progress Line 1 */}
@@ -27,10 +27,10 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ step }) => {
 
       {/* Step 2 */}
       <div className="flex items-center">
-        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${getStepClass(2)}`}>
+        <div className={`w-7 h-7 rounded-full flex items-center justify-center ${getStepClass(2)}`}>
           2
         </div>
-        <span className="ml-2 text-xs font-medium">Account Info</span>
+        <span className="ml-1 text-xs font-medium">Account Info</span>
       </div>
 
       {/* Progress Line 2 */}
@@ -38,10 +38,10 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ step }) => {
 
       {/* Step 3 */}
       <div className="flex items-center">
-        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${getStepClass(3)}`}>
+        <div className={`w-7 h-7 rounded-full flex items-center justify-center ${getStepClass(3)}`}>
           3
         </div>
-        <span className="ml-2 text-xs font-medium">Contact Info</span>
+        <span className="ml-1 text-xs font-medium">Contact Info</span>
       </div>
     </div>
   );
