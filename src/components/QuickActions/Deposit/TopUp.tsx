@@ -11,6 +11,7 @@ const TopUp = ({ setShowBankTransfer }: { setShowBankTransfer: React.Dispatch<Re
 
   const { mutate: deposit, isPending, isError, error } = useDeposit();
 
+  //Deposit Amount
   const depositLimit = 200000;
 
   const formatAmount = (value: string) => {
