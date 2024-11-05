@@ -97,7 +97,7 @@ const RecentTransactions: React.FC<TransactionProp> = ({ showTransactions }) => 
                         ))
                         ) : (
                         <tr>
-                            <td colSpan={5} className="py-4 text-center">No transactions found</td>
+                            <td colSpan={6} className="py-4 text-center">No transactions found</td>
                         </tr>
                         )}
                     </tbody>
