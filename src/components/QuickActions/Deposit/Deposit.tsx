@@ -8,7 +8,7 @@ const Deposit: React.FC = () => {
 
   return (
     <div className='Deposit'>
-      <div className='mb-8 bg-white p-5 m-[-1.5rem] font-medium text-gray-700 text-sm'>
+      <div className='mb-8 bg-white p-5 font-medium text-gray-700 text-sm'>
         <Link to='/dashboard' className=''>
           <span className='mr-2'>{'<'}</span> </Link>
           Add Money
