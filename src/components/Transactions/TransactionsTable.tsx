@@ -150,7 +150,7 @@ const TransactionsTable: React.FC = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={5} className="py-4 text-center">No transactions found</td>
+                <td colSpan={6} className="py-4 text-center">No transactions found</td>
               </tr>
             )}
           </tbody>
@@ -197,7 +197,7 @@ const TransactionsTable: React.FC = () => {
       </div>
 
       {/* Pagination Controls */}
-      <div className="flex justify-end items-center gap-1.5 lg:gap-2 mt-6">
+      {currentTransactions.length > 0 ? (<div className="flex justify-end items-center gap-1.5 lg:gap-2 mt-6">
         <button
           className={`lg:p-1.5 p-1 rounded-full ${currentPage === 1 ? 'bg-gray-300' : 'bg-green-600 hover:bg-green-700 text-white'}`}
           onClick={handlePrevPage}
@@ -207,13 +207,15 @@ const TransactionsTable: React.FC = () => {
         </button>
         <span className="text-sm text-gray-800">Page {currentPage} of {totalPages > 0 ? totalPages : 1}</span>
         <button
-          className={`lg:p-1.5 p-1 rounded-full ${currentPage === totalPages ? 'bg-gray-300' : 'bg-green-600 hover:bg-green-700 text-white'}`}
+          className={`lg:p-1.5 p-1 rounded-full ${currentPage === totalPages || totalPages === 0 ? 'bg-gray-300' : 'bg-green-600 hover:bg-green-700 text-white'}`}
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
         >
           <GrLinkNext className='text-xs lg:text-base'/>
         </button>
-      </div>
+      </div>): null}
+
+
     </div>
   );
 };

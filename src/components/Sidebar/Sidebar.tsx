@@ -12,7 +12,7 @@ const Sidebar: React.FC = () => {
   const {data} = useProfile();
 
   return (
-    <div className="w-60 flex flex-col justify-between bg-green-100 h-full p-4">
+    <div className="w-64 flex flex-col justify-between bg-green-100 h-full p-4">
       <div>
         <div className='h-10 w-10 cursor-pointer my-4'>
           <Logo/>
@@ -45,7 +45,7 @@ const Sidebar: React.FC = () => {
 </ul>
       </div>
 
-      <div className='flex items-center hover:cursor-pointer mb-2 gap-2'>
+      <div className='flex items-center hover:cursor-pointer ml-[-2px] mb-2 gap-1'>
         <img src={data?.avatar} className="h-10 w-10 rounded-full border-gray-600 hover:border-gray-700 border-2"></img>
         <div className='font-medium hover:font-semibold'>
           <div>{data?.first_name} {data?.last_name}</div>
