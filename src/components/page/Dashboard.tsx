@@ -7,6 +7,7 @@ import MobileNav from '../Sidebar/MobileNav';
 import Profile from '../Profile/Profile';
 import Deposit from '../QuickActions/Deposit/Deposit';
 import Transfer from '../QuickActions/Transfer';
+import Settings from '../Settings/Settings';
 
 const Dashboard: React.FC = () => {
   return (
@@ -18,14 +19,15 @@ const Dashboard: React.FC = () => {
      
 
       {/* Main Area */}
-      <div className="flex-1 p-6">
+      <div className="flex-1 p-6 lg:p-3">
         <Routes>
           {/* Home route, showing balance, quick actions, recent transactions */}
           <Route path="" element={<MainArea />} />
 
           {/* Transactions route, showing all transactions */}
           <Route path="transactions" element={<TransactionsTable />} />
-           <Route path="profile" element={<Profile />} />
+           <Route path="account" element={<Profile />} />
+           <Route path="settings" element={<Settings />} />
 
           {/* Quick Actions route - deposit and transfer */}
           <Route path="deposit" element={<Deposit />} />

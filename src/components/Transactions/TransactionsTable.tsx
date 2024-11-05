@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { useTransactions } from '../hooks/useProfile'; // Adjust this path accordingly
+import { useTransaction } from '../hooks/useProfile'; // Adjust this path accordingly
 import { MdOutlineArrowDownward, MdOutlineArrowUpward } from 'react-icons/md';
-
+import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 const TransactionsTable: React.FC = () => {
-  const { data } = useTransactions();
+  
   const [currentPage, setCurrentPage] = useState(1);
   const [transactionsPerPage] = useState(5); // Show 5 transactions per page
   const [searchQuery, setSearchQuery] = useState(''); // For search bar
+ const [searchInput, setSearchInput] = useState(''); // For search bar
 
+
+
+  const { data } = useTransaction(searchQuery);
   // Check if data is available and extract transactions
   const transactions = data?.transactions || [];
 
@@ -28,14 +32,24 @@ const TransactionsTable: React.FC = () => {
     return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
-  //format Date
-  // const formatDate = (dateString) => { 
-  //   const date = new Date(dateString); 
-  //   const options = { day: 'numeric', month: 'short', year: 'numeric' }; 
-  //   const formattedDate = date.toLocaleDateString('en-GB', options).replace(',', ''); 
-  //   const day = date.getDate(); 
-  //   const suffix = day % 10 === 1 && day !== 11 ? 'st' : day % 10 === 2 && day !== 12 ? 'nd' : day % 10 === 3 && day !== 13 ? 'rd' : 'th'; return formattedDate.replace(date.getDate(), `${day}${suffix}`); };
 
+  const formatDateTime = (dateString: string | number | Date) => {
+    const date = new Date(dateString);
+
+    const formattedDate = date.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
+
+    const formattedTime = date.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    });
+
+    return `${formattedDate}, ${formattedTime}`;
+  };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
@@ -45,9 +59,16 @@ const TransactionsTable: React.FC = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-    setCurrentPage(1); // Reset to page 1 on search
+  // const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setSearchQuery(e.target.value);
+  //   setCurrentPage(1); // Reset to page 1 on search
+  // };
+
+  const changeHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      setSearchQuery(searchInput);
+      setCurrentPage(1); // Reset to page 1 on search
+    }
   };
 
   interface Transactions {
@@ -58,10 +79,14 @@ const TransactionsTable: React.FC = () => {
         narration: string;
         amount: number;
         status: string;
+        recipient: {
+        account_name: string;
+        }
+        
   }
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 lg:p-2 lg:px-4">
+    <div className="bg-white shadow-md rounded-lg md:mt-4 p-4 lg:p-6 lg:px-5">
       <h2 className="md:text-lg font-semibold mb-4">All Transactions</h2>
 
       {/* Search Bar */}
@@ -70,8 +95,11 @@ const TransactionsTable: React.FC = () => {
           type="text"
           placeholder="Search by Reference"
           className="border border-gray-300 rounded-lg p-1 w-full"
-          value={searchQuery}
-          onChange={changeHandler}
+          // value={searchQuery}
+          // onChange={changeHandler}
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          onKeyDown={changeHandler} // Trigger search on Enter key
         />
       </div>
 
@@ -81,9 +109,10 @@ const TransactionsTable: React.FC = () => {
         <table className="w-full text-left">
           <thead>
             <tr className="text-sm font-medium text-gray-600 border-b">
+              <th className="py-2">Name</th>
               <th className="py-2">Date</th>
               <th className="py-2">Reference</th>
-              <th className="py-2">Description</th>
+              <th className="py-2">Narration</th>
               <th className="py-2">Amount</th>
               <th className="py-2">Status</th>
             </tr>
@@ -91,8 +120,9 @@ const TransactionsTable: React.FC = () => {
           <tbody>
             {currentTransactions.length > 0 ? (
               currentTransactions.map((transaction: Transactions) => (
-                <tr key={transaction.id} className="border-b hover:bg-gray-50">
-                  <td className="py-4">{new Date(transaction.created_at).toLocaleDateString()}</td>
+                <tr key={transaction.id} className="border-b md:text-sm lg:text-base text-gray-900 hover:bg-gray-50">
+                  <td className="py-4">{transaction.recipient.account_name}</td>
+                  <td className="py-4">{formatDateTime(transaction.created_at)}</td>
                   <td className="py-4">{transaction.reference}</td>
                   <td className="py-4">
                     <div className='flex items-center gap-2'>
@@ -143,8 +173,9 @@ const TransactionsTable: React.FC = () => {
                                     )}
                                 </span>
                             <div className='flex flex-col'>
-                                <span className="text-sm font-medium">{transaction.narration}</span>
-                                <span className="text-xs text-gray-500">{new Date(transaction.created_at).toLocaleDateString()}</span>
+                                <span className="text-sm font-medium">{transaction.transaction_type === 'deposit' ? 'Deposit' : `Transfer to ${transaction.recipient.account_name}`}</span>
+                                <span className="text-xs">Narration: {transaction.narration}</span>
+                                <span className="text-xs text-gray-500">{formatDateTime(transaction.created_at)}</span>
                                 <span className="text-xs text-gray-600">Reference: {transaction.reference}</span>
                             </div>
                             </div>
@@ -166,21 +197,21 @@ const TransactionsTable: React.FC = () => {
       </div>
 
       {/* Pagination Controls */}
-      <div className="flex justify-between mt-4">
+      <div className="flex justify-end items-center gap-1.5 lg:gap-2 mt-6">
         <button
-          className={`px-4 py-2 rounded-lg ${currentPage === 1 ? 'bg-gray-300' : 'bg-green-500 hover:bg-green-600 text-white'}`}
+          className={`lg:p-1.5 p-1 rounded-full ${currentPage === 1 ? 'bg-gray-300' : 'bg-green-600 hover:bg-green-700 text-white'}`}
           onClick={handlePrevPage}
           disabled={currentPage === 1}
         >
-          Previous
+          <GrLinkPrevious className='text-xs lg:text-base' />
         </button>
-        <span className="text-sm">Page {currentPage} of {totalPages > 0 ? totalPages : 1}</span>
+        <span className="text-sm text-gray-800">Page {currentPage} of {totalPages > 0 ? totalPages : 1}</span>
         <button
-          className={`px-4 py-2 rounded-lg ${currentPage === totalPages ? 'bg-gray-300' : 'bg-green-500 hover:bg-green-600 text-white'}`}
+          className={`lg:p-1.5 p-1 rounded-full ${currentPage === totalPages ? 'bg-gray-300' : 'bg-green-600 hover:bg-green-700 text-white'}`}
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
         >
-          Next
+          <GrLinkNext className='text-xs lg:text-base'/>
         </button>
       </div>
     </div>

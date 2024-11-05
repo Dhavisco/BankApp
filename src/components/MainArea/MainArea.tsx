@@ -21,17 +21,29 @@ const MainArea: React.FC = () => {
 
   const {data} = useProfile();
 
+  const count = 2;
+
   return (
     <div className="flex-1 p-2">
-      <div className="flex justify-between items-center mb-6 lg:mb-3">
-        <div className="flex items-center gap-2">
-          <img src={data?.avatar} alt="User Avatar" className="w-8 h-8 rounded-full"/>
+      <div className="flex justify-between items-center mb-4 lg:mb-2">
+        <div className="flex flex-col gap-1">
+          <div className='flex items-center gap-2'>
+            <img src={data?.avatar} alt="User Avatar" className="w-8 h-8 rounded-full"/>
            <h1 className="md:text-2xl text-xl font-semibold">Hi, {data?.first_name}</h1>
+          </div>
+          <p className='ml-2 text-sm lg:text-sm tracking-wider text-gray-400'>Welcome to your Bank App</p>
         </div>
        
         <div className="flex items-center hover:cursor-pointer space-x-4 mr-1">
           <div><RiCustomerService2Line className='w-5 h-5'/></div>
-          <div><IoMdNotificationsOutline className='w-5 h-5'/></div>
+         <div className="relative">
+          <IoMdNotificationsOutline className="w-5 h-5" />
+          {count > 0 && (
+            <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+              {count}
+            </span>
+          )}
+    </div>
         </div>
       </div>
       <BalanceCard isHidden ={isHidden} onToggle={handleToggle}/>

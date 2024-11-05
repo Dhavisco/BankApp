@@ -4,13 +4,10 @@ import { FaClipboardList } from "react-icons/fa";
 import { IoSpeedometer } from "react-icons/io5";
 import { FaCreditCard } from "react-icons/fa6";
 import { SlEnergy } from "react-icons/sl";
-import { RiCustomerService2Line, RiStarSmileFill } from "react-icons/ri";
-import { MdAddIcCall } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import { Hide, Show } from '../icons/ToggleIcon';
-import { SiSpringsecurity } from 'react-icons/si';
-import { IoIosLogOut } from "react-icons/io";
 import { Link } from 'react-router-dom';
+import Preloader from '../UI/Preloader';
 
 const Profile: React.FC = () => {
   const { data, isLoading} = useProfile();
@@ -28,7 +25,9 @@ const Profile: React.FC = () => {
   };
 
   if (isLoading) {
-    return <div>Loading your Account Info...</div>;
+    return <div>
+      <Preloader/>
+    </div>;
   }
 
 //   if (error) {
@@ -44,7 +43,7 @@ const Profile: React.FC = () => {
 
 
   return (
-    <div className ="profile">
+    <div className ="profile md:mt-4">
     <div className='flex flex-col lg:flex-row lg:justify-between lg:gap-2'>
 
    <div className="bg-gradient-to-tr from-green-600 to-green-300 shadow-md rounded-lg p-4 lg:w-full">
@@ -97,17 +96,19 @@ const Profile: React.FC = () => {
     <div className='flex flex-col lg:flex-row lg:justify-between lg:gap-2'>
         <div className=" bg-white shadow-md rounded-lg p-4 pt-6 lg:w-full flex flex-col gap-3 mt-3">
                     {/* Options */}
+                     <Link to="/dashboard/transactions">
                     <div className='flex justify-between items-center'>
                     <div className='flex gap-4 items-center'>
                         <span><FaClipboardList className='text-green-500 h-5 w-5'/></span> 
                         <div className='flex flex-col'>
-                        <Link to="/dashboard/transactions"><span className='text-sm md:text-base'>Transaction History</span></Link>
+                        <span className='text-sm md:text-base'>Transaction History</span>
                         <span className='text-xs md:text-sm text-gray-600'>View your transaction history</span>
                         </div>
                         
                         </div> 
                         <span className='text-lg text-gray-700'>{">"}</span>
                     </div>
+                    </Link>
 
                     <div className='flex justify-between items-center'>
                     <div className='flex gap-4 items-center'>
@@ -131,82 +132,20 @@ const Profile: React.FC = () => {
                         <span className='text-lg text-gray-700'>{">"}</span>
                     </div>
 
+                     <Link to="/dashboard/deposit">
                     <div className='flex justify-between items-center'>
                     <div className='flex gap-4 items-center'>
                         <span><SlEnergy className='text-green-500 h-5 w-5'/></span> 
-                        <Link to="/dashboard/deposit">
+                       
                         <div className='flex flex-col'>
                         <span className='text-sm md:text-base'>Transfer to Me</span>
                         <span className='text-xs md:text-sm text-gray-600'>Receive funds or payment</span>
-                        </div></Link>                
+                        </div>                
                         </div> 
                         <span className='text-lg text-gray-700'>{">"}</span>
                     </div>
+                    </Link>
                 
-        </div>
-
-        <div className=" bg-white shadow-md rounded-lg p-4 pt-6 lg:w-full flex flex-col gap-3 mt-3">
-            {/* Support */}
-            <div className='flex justify-between items-center'>
-            <div className='flex gap-4 items-center'>
-                <span><SiSpringsecurity className='text-green-500 h-5 w-5'/></span> 
-                <div className='flex flex-col'>
-                <span className='text-sm md:text-base'>Security Center</span>
-                <span className='text-xs md:text-sm text-gray-600'>Protect your funds</span>
-                </div>
-                
-                </div> 
-                <span className='text-lg text-gray-700'>{">"}</span>
-            </div>
-
-            <div className='flex justify-between items-center'>
-            <div className='flex gap-4 items-center'>
-                <span><MdAddIcCall className='text-green-500 h-5 w-5'/></span> 
-                <div className='flex flex-col'>
-                <span className='text-sm md:text-base'>USSD</span>
-                {/* <span className='text-xs md:text-sm text-gray-600'>USSD Code</span> */}
-                </div>                
-                </div> 
-                <span className='text-lg text-gray-700'>{">"}</span>
-            </div>
-
-            <div className='flex justify-between items-center'>
-            <div className='flex gap-4 items-center'>
-                <span><RiCustomerService2Line className='text-green-500 h-5 w-5'/></span> 
-                <div className='flex flex-col'>
-                <span className='text-sm md:text-base'>Customer Service Suport</span>
-                {/* <span className='text-xs md:text-sm text-gray-600'>CS Support</span> */}
-                </div>                
-                </div> 
-                <span className='text-lg text-gray-700'>{">"}</span>
-            </div>
-
-            <div className='flex justify-between items-center'>
-            <div className='flex gap-4 items-center'>
-                <span><RiStarSmileFill className='text-green-500 h-5 w-5'/></span> 
-                <div className='flex flex-col'>
-                <span className='text-sm md:text-base'>Rate Us</span>
-                {/* <span className='text-xs md:text-sm text-gray-600'>Rating</span> */}
-                </div>                
-                </div> 
-                <span className='text-lg text-gray-700'>{">"}</span>
-            </div>
-        
-        </div>
-
-         <div className=" bg-white shadow-md rounded-lg p-4 pt-6 lg:w-full flex flex-col gap-3 mt-3">
-            {/* Logout */}
-            <div className='flex justify-between items-center'>
-            <Link to ="/" className='flex gap-4 items-center'>
-                <span><IoIosLogOut className='text-green-500 h-5 w-5'/></span> 
-                <div className='flex flex-col'>
-                <span className='text-sm md:text-base'>Logout</span>
-                </div>
-                
-                </Link> 
-                <span className='text-lg text-gray-700'>{">"}</span>
-            </div>
-        
         </div>
     </div>
 
