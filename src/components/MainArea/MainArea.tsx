@@ -21,6 +21,8 @@ const MainArea: React.FC = () => {
 
   const {data} = useProfile();
 
+  const profile = data?.data;
+
   const count = 2;
 
   return (
@@ -28,8 +30,8 @@ const MainArea: React.FC = () => {
       <div className="flex justify-between items-center mb-4 lg:mb-2">
         <div className="flex flex-col gap-1">
           <div className='flex items-center gap-2'>
-            <img src={data?.avatar} alt="User Avatar" className="w-8 h-8 rounded-full"/>
-           <h1 className="md:text-2xl text-xl font-semibold">Hi, {data?.first_name}</h1>
+            <img src={profile?.avatar} alt="User Avatar" className="w-8 h-8 rounded-full"/>
+           <h1 className="md:text-2xl text-xl font-semibold">Hi, {profile?.first_name}</h1>
           </div>
           <p className='ml-2 text-sm lg:text-sm tracking-wider text-gray-400'>Welcome to your Bank App</p>
         </div>

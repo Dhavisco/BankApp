@@ -13,7 +13,7 @@ const TransactionsTable: React.FC = () => {
 
   const { data } = useTransaction(searchQuery);
   // Check if data is available and extract transactions
-  const transactions = data?.transactions || [];
+  const transactions = data?.data.transactions || [];
 
   // Handle search filtering
   const filteredTransactions = transactions.filter((transaction: { reference: string }) =>

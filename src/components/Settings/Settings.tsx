@@ -13,6 +13,8 @@ const Settings:React.FC = () => {
 
     const {data} = useProfile();
 
+    const profile = data?.data;
+
   return (
     <div className ="Settings">
    
@@ -21,8 +23,8 @@ const Settings:React.FC = () => {
          <div className="  shadow-md p-4 pt-6 lg:w-full flex flex-col gap-3 mt-3">
             {/* User Info */}
            <div className="flex items-center gap-2">
-          <img src={data?.avatar} alt="User Avatar" className="w-8 h-8 rounded-full"/>
-           <h1 className="md:text-2xl text-xl font-semibold">Hi, {data?.first_name}</h1>
+          <img src={profile?.avatar} alt="User Avatar" className="w-8 h-8 rounded-full"/>
+           <h1 className="md:text-2xl text-xl font-semibold">Hi, {profile?.first_name}</h1>
         </div>
         <p className='text-sm text-gray-500'>Do you need Help?</p> 
         

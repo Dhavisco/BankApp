@@ -8,7 +8,8 @@ interface TransactionProp {
 
 const RecentTransactions: React.FC<TransactionProp> = ({ showTransactions }) => {
     const { data } = useTransaction(''); // Fetch transactions using the custom hook
-    const transactions = data?.transactions || []; // Handle cases where transactions might not be available
+    
+    const transactions = data?.data.transactions || []; // Handle cases where transactions might not be available
 
     // formated transaction amount
    const formatAmount = (value: string) => {

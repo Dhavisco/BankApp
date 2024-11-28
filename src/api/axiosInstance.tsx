@@ -10,14 +10,16 @@ const API_URL = import.meta.env.VITE_BASE_URL; // Assumes you're using Vite for 
   },
 });
 
+// Automatically attach the token if it exists
 axiosInstance.interceptors.request.use(
-  config => {
-    config.headers['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
-        return config;
-    },
-    error => {
-        return Promise.reject(error);
-
-    });
+  (config) => {
+    const token = localStorage.getItem('access_token');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 export default axiosInstance;

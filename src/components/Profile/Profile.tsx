@@ -13,7 +13,9 @@ const Profile: React.FC = () => {
   const { data, isLoading} = useProfile();
    const [isHidden, setIsHidden] = useState(true);
 
-  const balance = data?.account.balance;
+   const profile = data?.data;
+
+  const balance = profile?.account.balance;
 
   const formatBalance = (balance: number) => {
   return balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -50,8 +52,8 @@ const Profile: React.FC = () => {
         <div className='profile-header'>
             <div className='flex justify-between'>
                 <div className='flex gap-1 items-center'>
-                    <img src={data?.avatar} alt="" className='w-5 h-5 rounded-full shadow-lg' />
-                    <div className='text-lg font-semibold text-white'>Hi, {data?.first_name}</div>
+                    <img src={profile?.avatar} alt="" className='w-5 h-5 rounded-full shadow-lg' />
+                    <div className='text-lg font-semibold text-white'>Hi, {profile?.first_name}</div>
                 </div>
                 <div><IoSettingsOutline className='hover:cursor-pointer text-black'/></div>
             </div>
@@ -73,13 +75,13 @@ const Profile: React.FC = () => {
     <div className=" bg-white shadow-md rounded-lg p-4 lg:w-full flex flex-col gap-1 lg:gap-2 mt-3 lg:mt-0">
           <h2 className="text-xl font-semibold mb-1">Account Details</h2>
          <div>
-          <strong>Account No:</strong> {data.account.account_number}
+          <strong>Account No:</strong> {profile.account.account_number}
         </div>
         <div>
-          <strong>Name:</strong> {data.first_name} {data.last_name}
+          <strong>Name:</strong> {profile.first_name} {profile.last_name}
         </div>
         <div>
-          <strong>Email:</strong> {data.email}
+          <strong>Email:</strong> {profile.email}
         </div>
         {/* <div>
           <strong>Date of Birth:</strong> {data.date_of_birth}

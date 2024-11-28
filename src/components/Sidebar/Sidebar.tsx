@@ -11,6 +11,8 @@ const Sidebar: React.FC = () => {
   const isActive = (path: string) => location.pathname === path;
   const {data} = useProfile();
 
+  const profile = data?.data;
+
   return (
     <div className="w-64 flex flex-col justify-between bg-green-100 h-full p-4">
       <div>
@@ -46,10 +48,10 @@ const Sidebar: React.FC = () => {
       </div>
 
       <div className='flex items-center hover:cursor-pointer ml-[-2px] mb-2 gap-1'>
-        <img src={data?.avatar} className="h-10 w-10 rounded-full border-gray-600 hover:border-gray-700 border-2"></img>
+        <img src={profile?.avatar} className="h-10 w-10 rounded-full border-gray-600 hover:border-gray-700 border-2"></img>
         <div className='font-medium hover:font-semibold'>
-          <div>{data?.first_name} {data?.last_name}</div>
-          <div className='text-sm'>{data?.email}</div>
+          <div>{profile?.first_name} {profile?.last_name}</div>
+          <div className='text-sm'>{profile?.email}</div>
         </div>
       </div>
     </div>

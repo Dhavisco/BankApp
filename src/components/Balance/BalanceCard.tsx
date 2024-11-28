@@ -15,7 +15,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({isHidden, onToggle}) => {
 
   // const balance = 1250.75; // Example balance
 
-  const balance = data?.account.balance;
+  const balance = data?.data.account.balance;
 
   const formatBalance = (balance: number) => {
   return balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
