@@ -25,7 +25,7 @@ const Transfer = () => {
   const { data: profile } = useProfile();
 
 
-  const curBalance = profile?.account?.balance;
+  const curBalance = profile?.data?.account?.balance;
 
   const handleAccountNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
