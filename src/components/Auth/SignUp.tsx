@@ -95,7 +95,6 @@ const SignUp: React.FC = () => {
         // Extract error message from the API response
         const errorMessage = error.message || 'An unexpected error occurred. Please try again.';
         setApiError(errorMessage);
-        console.error('Signup error', error.message);
       }
     } finally {
       setSubmitting(false); // Ensure that the form is unlocked after submission

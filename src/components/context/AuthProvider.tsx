@@ -42,15 +42,23 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     try {
       const loginResponse = await loginMutation.mutateAsync(credentials);
       setUser(loginResponse); // Stores the user info recieved from the fetched data
-      // console.log('User logged in:', loginResponse.first_name);
-      // console.log('User Data', loginResponse)
     } catch (error: unknown) {
-      // Improve error handling and casting
-      const errorMessage = error instanceof Error
-        ? error.message
-        : (error as { response?: { data?: { message?: string } } })?.response?.data?.message || 'Login error occurred';
-      console.error('Login error:', errorMessage);
-      throw new Error(errorMessage); // Optional: propagate the error
+       let errorMessage = 'An unknown error occurred'; // Default error message
+
+    if (error) {
+      const axiosError = error as {
+        response?: { data?: { error?: string; message?: string } };
+      };
+
+      errorMessage =
+        axiosError.response?.data?.error || // Prefer `error` if it exists
+        'An unknown error occurred'; // Default
+    }
+    //testing purpose
+    // console.error('Login error:', errorMessage); // Log the extracted error message
+    // console.error('Raw error object:', error); // Log the raw error for debugging
+    throw new Error(errorMessage); // Optional: propagate the error
+
     }
   };
   const signupHandler = async (userData: {
@@ -64,12 +72,12 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   }) => {
     try {
       await signupMutation.mutateAsync(userData); // Call the signup hook
-      console.log('User successfully signed up:', userData.email);
     } catch (error: unknown) {
       const errorMessage = error instanceof Error
         ? error.message
-        : (error as { response?: { data?: { message?: string } } })?.response?.data?.message || 'Signup error occurred';
-      console.error('Signup error:', errorMessage);
+        : (error as { response?: { data?: { error?: string } } })?.response?.data?.error || 'Signup error occurred';
+      // console.error('Signup error:', errorMessage);
+      // console.error('Error', error)
       throw new Error(errorMessage); // Optional: propagate the error
     }
   };
